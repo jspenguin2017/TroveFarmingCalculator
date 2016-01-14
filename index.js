@@ -5,21 +5,21 @@ var isValid = [true, true, true, true, true];
 //On change validation
 var priceValidate = function(id, index){
   var valueBuffer = parseFloat($(id).val());
-  $(id).removeClass("has-success has-warning has-error");
+  $(id + "Div").removeClass("has-success has-warning has-error");
   $(id + "Icon").removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove")
   if(valueBuffer === NaN || valueBuffer < 0){
     //Not valid
-    $(id).addClass("has-error");
+    $(id  + "Div").addClass("has-error");
     $(id + "Icon").addClass("glyphicon-remove");
     isValid[index] = false;
   }else if(valueBuffer < defaultPrices[index] / 2 || valueBuffer > defaultPrice[index] * 2){
     //Warning: price far away from normal
-    $(id).addClass("has-warning");
+    $(id  + "Div").addClass("has-warning");
     $(id + "Icon").addClass("glyphicon-warning-sign");
     isValid[index] = true;
   }else{
     //Passed all tests
-    $(id).addClass("has-success");
+    $(id  + "Div").addClass("has-success");
     $(id + "Icon").addClass("glyphicon-ok");
     isValid[index] = true;
   }
@@ -81,9 +81,13 @@ var Database = {
   fluxS45: 1700
 }
 var calculate = function(){
+  //If prices are not valid
   if(!(isValid[0] && isValid[1] && isValid[2] && isValid[3] && isValid[4])){
     $("html, body").animate({scrollTop: $("#step1").offset().top}, "fast");
+    return;
   }
+  //Prices are valid, start calculating
+  
 };
 $("#theButton").click(function(){
   $("#ourputResultsDiv").css("display", "inline");
