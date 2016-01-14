@@ -27,7 +27,7 @@
       <script src="index.js" charset="utf-8"></script>
     <!-- End JS -->
   </head>
-  <body role="document" style="min-width:700px;">
+  <body role="document">
     <div style="height:20px;"></div>
     <!-- No Script -->
     <noscript>
@@ -47,44 +47,54 @@
         <p>Shadow Level 5 and higher gears should not be forged before decomposing. Depending on the gear, you might want to sell it in Trade chat. </p>
         <br>
         <!-- Part 1 -->
-        <p id="step1"><strong>Step 1: </strong>Enter current prices (in flux)</p>
+        <p id="step1"><strong>Step 1: </strong>Enter current prices</p>
         <p>Green: valid, please move on; Yellow: price is way off the default value, please double check; Red: invalid, please enter numeric price. </p>
-        <table class="table">
+        <table class="table" style="max-width:600px;">
           <thead>
             <tr>
-              <th>Eye</th>
-              <th>Twice</th>
-              <th>Thrice</th>
-              <th>Quad</th>
-              <th>Penta</th>
+              <th>Material</th>
+              <th>Price (in flux)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td><strong>Eye</strong></td>
               <td>
                 <div class="form-group has-warning has-feedback" id="eyePriceDiv">
                   <input type="text" class="form-control" id="eyePrice">
                   <span class="glyphicon glyphicon-warning-sign form-control-feedback" id="eyePriceIcon"></span>
                 </div>
               </td>
+            </tr>
+            <tr>
+              <td><strong>Twice</strong></td>
               <td>
                 <div class="form-group has-warning has-feedback" id="twicePriceDiv">
                   <input type="text" class="form-control" id="twicePrice">
                   <span class="glyphicon glyphicon-warning-sign form-control-feedback" id="twicePriceIcon"></span>
                 </div>
               </td>
+            </tr>
+            <tr>
+              <td><strong>Thrice</strong></td>
               <td>
                 <div class="form-group has-warning has-feedback" id="thricePriceDiv">
                   <input type="text" class="form-control" id="thricePrice">
                   <span class="glyphicon glyphicon-warning-sign form-control-feedback" id="thricePriceIcon"></span>
                 </div>
               </td>
+            </tr>
+            <tr>
+              <td><strong>Quad</strong></td>
               <td>
                 <div class="form-group has-warning has-feedback" id="quadPriceDiv">
                   <input type="text" class="form-control" id="quadPrice">
                   <span class="glyphicon glyphicon-warning-sign form-control-feedback" id="quadPriceIcon"></span>
                 </div>
               </td>
+            </tr>
+            <tr>
+              <td><strong>Penta</strong></td>
               <td>
                 <div class="form-group has-warning has-feedback" id="pentaPriceDiv">
                   <input type="text" class="form-control" id="pentaPrice">
@@ -97,7 +107,7 @@
         <br>
         <!-- Part 2 -->
         <p id="step2"><strong>Step 2: </strong>Enter the data of the gear that you plan to forge: </p>
-         <table class="table">
+         <table class="table"  style="max-width:600px;">
           <thead>
             <tr>
               <th>Shadow Level</th>
