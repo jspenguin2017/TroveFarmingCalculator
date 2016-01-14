@@ -42,7 +42,7 @@ var priceValidate = function(id, index){
   console.log(valueBuffer);/////TESTING??????????????????????????????????????
   $(id + "Div").removeClass("has-success has-warning has-error");
   $(id + "Icon").removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove")
-  if(valueBuffer === NaN || valueBuffer < 0){
+  if(isNaN(valueBuffer) || valueBuffer < 0){
     //Not valid
     $(id  + "Div").addClass("has-error");
     $(id + "Icon").addClass("glyphicon-remove");
