@@ -84,7 +84,7 @@ var calculate = function(){
   
 };
 $("#theButton").click(funciton(){
-  $("#ourputResultsDiv").css("display", "normal");
+  $("#ourputResultsDiv").css("display", "inline");
   calculate();
 });
 return true;};
