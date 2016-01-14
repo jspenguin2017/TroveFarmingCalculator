@@ -83,4 +83,8 @@ var Database = {
 var calculate = function(){
   
 };
+$("#theButton").click(funciton(){
+  $("#ourputResultsDiv").css("display", "normal");
+  calculate();
+});
 return true;};
