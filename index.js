@@ -44,7 +44,13 @@ var Database = {
   forgeS3Flux: 250,
   forgeS3Eye: 30,
   forgeS4Flux: 400,
-  forgeS4Eye: 50
+  forgeS4Eye: 50,
+  //Naming
+  S1: "N/A",
+  S2: "Twice",
+  S3: "Thrice", 
+  S4: "Quad", 
+  S5: "Penta"
 }
 //On change validation
 var priceValidate = function(id, index){
