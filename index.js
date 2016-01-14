@@ -39,6 +39,7 @@ var Database = {
 //On change validation
 var priceValidate = function(id, index){
   var valueBuffer = parseFloat($(id).val());
+  console.log(valueBuffer);/////TESTING??????????????????????????????????????
   $(id + "Div").removeClass("has-success has-warning has-error");
   $(id + "Icon").removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove")
   if(valueBuffer === NaN || valueBuffer < 0){
