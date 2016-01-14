@@ -87,14 +87,32 @@ var calculate = function(){
   var starNeeded = 5 - parseInt($("#starNumber").val());
   var totalCostFlux = 0;
   //Eye
-  var eyeBuffer = 0;
+  var buffer = 0;
   if(shadowLevel === 1){
     //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
-    eyeBuffer += 50;
+    buffer += 50;
   }
-  eyeBuffer += Database["forgeS" + shadowLevel + "Eye"] * starNeeded;
-  $("#ourputEyeQuantity1").html("Eyes (" + eyeBuffer.toString() + ")")
-  totalCostFlux = eyeBuffer * defaultPrices[0];
+  buffer += Database["forgeS" + shadowLevel + "Eye"] * starNeeded;
+  $("#ourputEyeQuantity1").html("Eyes (" + buffer.toString() + ")");
+  $("#outputEyePrice1").html((buffer * defaultPrices[0]).toString());
+  totalCostFlux += buffer * defaultPrices[0];
+  //Flux
+  var buffer = 0;
+  if(shadowLevel === 1){
+    //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
+    buffer += 500;
+  }
+  buffer += Database["forgeS" + shadowLevel + "Flux"] * starNeeded;
+  $("#ourputFluxQuantity1").html("Flux (" + buffer.toString() + ")");
+  $("#outputFluxPrice1").html(buffer);
+  totalCostFlux += buffer
+  //Forged souls
+  $("#outputSoulType1").html((shadowLevel === 1)? Database["S1"] : Database["S" + shadowLevel] + " (2)");
+  if(shadowLevel === 1){
+    $("#outputSoulPrice1").html("0");
+  }else{
+    
+  }
   //All done, show results
   $("#ourputResultsDiv").css("display", "inline");
 };
