@@ -12,7 +12,7 @@ var priceValidate = function(id, index){
     $(id  + "Div").addClass("has-error");
     $(id + "Icon").addClass("glyphicon-remove");
     isValid[index] = false;
-  }else if(valueBuffer < defaultPrices[index] / 2 || valueBuffer > defaultPrice[index] * 2){
+  }else if(valueBuffer < defaultPrices[index] / 2 || valueBuffer > defaultPrices[index] * 2){
     //Warning: price far away from normal
     $(id  + "Div").addClass("has-warning");
     $(id + "Icon").addClass("glyphicon-warning-sign");
