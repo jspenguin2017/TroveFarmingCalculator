@@ -1,5 +1,6 @@
 //Variables
 var defaultPrices = [3.8, 900, 3700, 13000, 39000];
+var enteredPrices = [3.8, 900, 3700, 13000, 39000];
 var isValid = [true, true, true, true, true];
 //Database
 var Database = {
@@ -70,12 +71,14 @@ var priceValidate = function(id, index){
     $(id + "Icon").addClass("glyphicon-warning-sign");
     $(id).val(valueBuffer);
     isValid[index] = true;
+    enteredPrices[index] = valueBuffer;
   }else{
     //Passed all tests
     $(id  + "Div").addClass("has-success");
     $(id + "Icon").addClass("glyphicon-ok");
     $(id).val(valueBuffer);
     isValid[index] = true;
+    enteredPrices[index] = valueBuffer;
   }
 };
 //Math
@@ -105,8 +108,8 @@ var calculate = function(){
   }
   buffer += Database["forgeS" + shadowLevel + "Eye"] * starNeeded;
   $("#outputEyeQuantity1").html("Eyes (" + buffer.toString() + ")");
-  $("#outputEyePrice1").html(roundToString(buffer * defaultPrices[0]));
-  totalFluxCosts += buffer * defaultPrices[0];
+  $("#outputEyePrice1").html(roundToString(buffer * enteredPrices[0]));
+  totalFluxCosts += buffer * enteredPrices[0];
   //Flux
   buffer = 0;
   if(shadowLevel === 1){
@@ -122,15 +125,15 @@ var calculate = function(){
   if(shadowLevel === 1){
     $("#outputSoulPrice1").html("0");
   }else{
-    buffer = defaultPrices[shadowLevel - 1] * 2;
+    buffer = enteredPrices[shadowLevel - 1] * 2;
     $("#outputSoulPrice1").html(roundToString(buffer));
     totalFluxCosts += buffer;
   }
   //-----Loss-----
   //Eyes
   $("#outputEyeQuantity2").html("Eyes (" + Database["eyes"] + ")");
-  $("#outputEyePrice2").html(roundToString(Database["eyes"] * defaultPrices[0]));
-  totalFluxCosts += Database["eyes"] * defaultPrices[0];
+  $("#outputEyePrice2").html(roundToString(Database["eyes"] * enteredPrices[0]));
+  totalFluxCosts += Database["eyes"] * enteredPrices[0];
   //Flux
   buffer = Database["fluxS" + shadowLevel + starNumber];
   $("#outputFluxQuantity2").html("Flux (" + buffer.toString() + ")");
@@ -141,7 +144,7 @@ var calculate = function(){
   if(shadowLevel === 1){
     $("#outputSoulPrice2").html("0");
   }else{
-    buffer = defaultPrices[shadowLevel - 1];
+    buffer = enteredPrices[shadowLevel - 1];
     $("#outputSoulPrice2").html(roundToString(buffer));
     totalFluxCosts += buffer;
   }
@@ -154,8 +157,8 @@ var calculate = function(){
   var totalFluxGain = 0;
   //Eyes
   $("#outputEyeQuantity3").html("Eyes (" + Database["eyes"] + ")");
-  $("#outputEyePrice3").html(roundToString(Database["eyes"] * defaultPrices[0]));
-  totalFluxGain += Database["eyes"] * defaultPrices[0];
+  $("#outputEyePrice3").html(roundToString(Database["eyes"] * enteredPrices[0]));
+  totalFluxGain += Database["eyes"] * enteredPrices[0];
   //Flux
   buffer = Database["fluxS" + shadowLevel + starNumber];
   $("#outputFluxQuantity3").html("Flux (" + buffer.toString() + ")");
@@ -163,7 +166,7 @@ var calculate = function(){
   totalFluxGain += buffer;
   //Forged souls
   $("#outputSoulType3").html(Database["S" + shadowLevel] + " (1)");
-  buffer = defaultPrices[shadowLevel - 1];
+  buffer = enteredPrices[shadowLevel - 1];
   $("#outputSoulPrice3").html(roundToString(buffer));
   totalFluxGain += buffer;
   //Show total flux gain
