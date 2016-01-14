@@ -66,11 +66,13 @@ var priceValidate = function(id, index){
     //Warning: price far away from default
     $(id  + "Div").addClass("has-warning");
     $(id + "Icon").addClass("glyphicon-warning-sign");
+    $(id).val(valueBuffer);
     isValid[index] = true;
   }else{
     //Passed all tests
     $(id  + "Div").addClass("has-success");
     $(id + "Icon").addClass("glyphicon-ok");
+    $(id).val(valueBuffer);
     isValid[index] = true;
   }
 };
@@ -94,7 +96,7 @@ var calculate = function(){
     buffer += 50;
   }
   buffer += Database["forgeS" + shadowLevel + "Eye"] * starNeeded;
-  $("#ourputEyeQuantity1").html("Eyes (" + buffer.toString() + ")");
+  $("#outputEyeQuantity1").html("Eyes (" + buffer.toString() + ")");
   $("#outputEyePrice1").html((buffer * defaultPrices[0]).toString());
   totalCostFlux += buffer * defaultPrices[0];
   //Flux
@@ -104,7 +106,7 @@ var calculate = function(){
     buffer += 500;
   }
   buffer += Database["forgeS" + shadowLevel + "Flux"] * starNeeded;
-  $("#ourputFluxQuantity1").html("Flux (" + buffer.toString() + ")");
+  $("#outputFluxQuantity1").html("Flux (" + buffer.toString() + ")");
   $("#outputFluxPrice1").html(buffer);
   totalCostFlux += buffer;
   //Forged souls
@@ -117,7 +119,8 @@ var calculate = function(){
     totalCostFlux += buffer;
   }
   //All done, show results
-  $("#ourputResultsDiv").css("display", "inline");
+  $("#outputResultsDiv").css("display", "inline");
+  $("html, body").animate({scrollTop: $("#outputResultsDiv").offset().top}, "fast");
 };
 //Init
 window.onload = function(){
