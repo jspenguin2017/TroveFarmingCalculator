@@ -86,8 +86,9 @@ var calculate = function(){
   var shadowLevel = parseInt($("#shadowLevel").val());
   var starNeeded = 5 - parseInt($("#starNumber").val());
   var totalCostFlux = 0;
-  //Eye
   var buffer = 0;
+  //Eye
+  buffer = 0;
   if(shadowLevel === 1){
     //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
     buffer += 50;
@@ -97,7 +98,7 @@ var calculate = function(){
   $("#outputEyePrice1").html((buffer * defaultPrices[0]).toString());
   totalCostFlux += buffer * defaultPrices[0];
   //Flux
-  var buffer = 0;
+  buffer = 0;
   if(shadowLevel === 1){
     //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
     buffer += 500;
@@ -105,13 +106,15 @@ var calculate = function(){
   buffer += Database["forgeS" + shadowLevel + "Flux"] * starNeeded;
   $("#ourputFluxQuantity1").html("Flux (" + buffer.toString() + ")");
   $("#outputFluxPrice1").html(buffer);
-  totalCostFlux += buffer
+  totalCostFlux += buffer;
   //Forged souls
   $("#outputSoulType1").html((shadowLevel === 1)? Database["S1"] : Database["S" + shadowLevel] + " (2)");
   if(shadowLevel === 1){
     $("#outputSoulPrice1").html("0");
   }else{
-    
+    buffer = defaultPrices[shadowLevel - 1] * 2;
+    $("#outputSoulPrice1").html(buffer.toString());
+    totalCostFlux += buffer;
   }
   //All done, show results
   $("#ourputResultsDiv").css("display", "inline");
