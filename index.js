@@ -39,7 +39,6 @@ var Database = {
 //On change validation
 var priceValidate = function(id, index){
   var valueBuffer = parseFloat($(id).val());
-  console.log(valueBuffer);/////TESTING??????????????????????????????????????
   $(id + "Div").removeClass("has-success has-warning has-error");
   $(id + "Icon").removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove")
   if(isNaN(valueBuffer) || valueBuffer < 0){
@@ -88,10 +87,15 @@ window.onload = function(){
     });
   //Write in default prices
   $("#eyePrice").val(defaultPrices[0]);
+  priceValidate("#eyePrice", 0);
   $("#twicePrice").val(defaultPrices[1]);
+  priceValidate("#twicePrice", 1);
   $("#thricePrice").val(defaultPrices[2]);
+  priceValidate("#thricePrice", 2);
   $("#quadPrice").val(defaultPrices[3]);
+  priceValidate("#quadPrice", 3);
   $("#pentaPrice").val(defaultPrices[4]);
+  priceValidate("#pentaPrice", 4);
   //Calculate! button
   $("#theButton").click(function(){
     $("#ourputResultsDiv").css("display", "inline");
