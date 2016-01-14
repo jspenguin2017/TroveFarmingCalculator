@@ -5,7 +5,7 @@ var isValid = [true, true, true, true, true];
 var Database = {
   //Deconstruction values, thanks to the author of: 
   //https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=1022828731
-  eye: 7, //Shadow 1 to 4 all give 7 eyes
+  eyes: 7, //Shadow 1 to 4 all give 7 eyes
   //Flux: fluxS+#level+#star
   //Shadow Level 1
   fluxS10: 25,
@@ -78,18 +78,20 @@ var priceValidate = function(id, index){
 };
 //Kernal
 var calculate = function(){
-  //If prices are not valid
+  //Check if prices are valid
   if(!(isValid[0] && isValid[1] && isValid[2] && isValid[3] && isValid[4])){
+    //Not valid, scroll to price section
     $("html, body").animate({scrollTop: $("#step1").offset().top}, "fast");
     return;
   }
   //Prices are valid, start calculating
-  //-----Forging costs-----
   var shadowLevel = parseInt($("#shadowLevel").val());
-  var starNeeded = 5 - parseInt($("#starNumber").val());
-  var totalCostFlux = 0;
+  var starNumber = parseInt($("#starNumber").val());
+  var starNeeded = 5 - starNumber;
+  var totalFluxCosts = 0;
   var buffer = 0;
-  //Eye
+  //-----Forging costs-----
+  //Eyes
   buffer = 0;
   if(shadowLevel === 1){
     //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
@@ -98,7 +100,7 @@ var calculate = function(){
   buffer += Database["forgeS" + shadowLevel + "Eye"] * starNeeded;
   $("#outputEyeQuantity1").html("Eyes (" + buffer.toString() + ")");
   $("#outputEyePrice1").html((buffer * defaultPrices[0]).toString());
-  totalCostFlux += buffer * defaultPrices[0];
+  totalFluxCosts += buffer * defaultPrices[0];
   //Flux
   buffer = 0;
   if(shadowLevel === 1){
@@ -108,7 +110,7 @@ var calculate = function(){
   buffer += Database["forgeS" + shadowLevel + "Flux"] * starNeeded;
   $("#outputFluxQuantity1").html("Flux (" + buffer.toString() + ")");
   $("#outputFluxPrice1").html(buffer);
-  totalCostFlux += buffer;
+  totalFluxCosts += buffer;
   //Forged souls
   $("#outputSoulType1").html((shadowLevel === 1)? Database["S1"] : Database["S" + shadowLevel] + " (2)");
   if(shadowLevel === 1){
@@ -116,8 +118,60 @@ var calculate = function(){
   }else{
     buffer = defaultPrices[shadowLevel - 1] * 2;
     $("#outputSoulPrice1").html(buffer.toString());
-    totalCostFlux += buffer;
+    totalFluxCosts += buffer;
   }
+  //-----Loss-----
+  //Eyes
+  $("#outputEyeQuantity2").html("Eyes (" + Database["eyes"] + ")");
+  $("#outputEyePrice2").html((Database["eyes"] * defaultPrices[0]).toString());
+  totalFluxCosts += Database["eyes"] * defaultPrices[0];
+  //Flux
+  buffer = Database["fluxS" + shadowLevel + starNumber];
+  $("#outputFluxQuantity2").html("Flux (" + buffer.toString() + ")");
+  $("#outputFluxPrice2").html(buffer);
+  totalFluxCosts += buffer;
+  //Forged souls
+  $("#outputSoulType2").html((shadowLevel === 1)? Database["S1"] : Database["S" + shadowLevel] + " (1)");
+  if(shadowLevel === 1){
+    $("#outputSoulPrice2").html("0");
+  }else{
+    buffer = defaultPrices[shadowLevel - 1];
+    $("#outputSoulPrice2").html(buffer.toString());
+    totalFluxCosts += buffer;
+  }
+  //Show total flux costs
+  $("#outputTotalCosts").html(totalFluxCosts.toString());
+  //-----Gain-----
+  var shadowLevel +=1;
+  var starNumber = 0;
+  var totalFluxGain = 0;
+  var buffer = 0;
+  //Eyes
+  $("#outputEyeQuantity3").html("Eyes (" + Database["eyes"] + ")");
+  $("#outputEyePrice3").html((Database["eyes"] * defaultPrices[0]).toString());
+  totalFluxGain += Database["eyes"] * defaultPrices[0];
+  //Flux
+  buffer = Database["fluxS" + shadowLevel + starNumber];
+  $("#outputFluxQuantity3").html("Flux (" + buffer.toString() + ")");
+  $("#outputFluxPrice3").html(buffer);
+  totalFluxGain += buffer;
+  //Forged souls
+  $("#outputSoulType2").html(Database["S" + shadowLevel] + " (1)");
+  buffer = defaultPrices[shadowLevel - 1];
+  $("#outputSoulPrice2").html(buffer.toString());
+  totalFluxGain += buffer;
+  //Show total flux gain
+  $("#outputTotalGain").html(totalFluxGain.toString());
+  //-----Calculate profit-----
+  var profit = totalFluxGain - totalFluxCosts;
+  buffer = "<strong style='color:";
+  if(profit > 0){
+    buffer += "green;'>";
+  }else{
+    buffer += "red;'>"
+  }
+  buffer += "Profit: " + profit.toString() + "</strong>";
+  $("#outputProfit").html(buffer);
   //All done, show results
   $("#outputResultsDiv").css("display", "inline");
   $("html, body").animate({scrollTop: $("#outputResultsDiv").offset().top}, "fast");
