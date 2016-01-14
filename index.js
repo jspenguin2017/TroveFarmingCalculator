@@ -47,7 +47,8 @@ $("#quadPrice").val(defaultPrices[3]);
 $("#pentaPrice").val(defaultPrices[4]);
 //Database and kernal function
 var Database = {
-  //Deconstruction values
+  //Deconstruction values, thanks to the author of: 
+  //https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=1022828731
   eye: 7, //Shadow 1 to 4 all give 7 eyes
   //Flux: S level star
   //Shadow Level 1
