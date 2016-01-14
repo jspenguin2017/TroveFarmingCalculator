@@ -58,12 +58,26 @@ var Database = {
   fluxS14: 110,
   fluxS15: 140,
   //Shadow Level 2
-  fluxS10: 100;
-  fluxS11: 120,
-  fluxS12: 150,
-  fluxS13: 200,
-  fluxS14: 250,
-  fluxS15: 350,
+  fluxS20: 100;
+  fluxS21: 120,
+  fluxS22: 150,
+  fluxS23: 200,
+  fluxS24: 250,
+  fluxS25: 350,
+  //Shadow Level 3
+  fluxS30: 400;
+  fluxS31: 450,
+  fluxS32: 500,
+  fluxS33: 550,
+  fluxS34: 650,
+  fluxS35: 750,
+  //Shadow Level 4
+  fluxS40: 1000;
+  fluxS41: 1100,
+  fluxS42: 1200,
+  fluxS43: 1300,
+  fluxS44: 1500,
+  fluxS45: 1700
 }
 var calculate = function(){
   
