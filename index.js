@@ -35,6 +35,8 @@ var Database = {
   fluxS43: 1300,
   fluxS44: 1500,
   fluxS45: 1700,
+  //Shadow Level 5 - only need 0 star
+  fluxS50: 2000,
   //Forging costs, thanks to the author of: 
   //https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=0
   forgeS1Flux: 75,
