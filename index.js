@@ -140,7 +140,7 @@ var calculate = function(){
     $("#outputSoulPrice2").html("0");
   }else{
     buffer = defaultPrices[shadowLevel - 1];
-    $("#outputSoulPrice2").html(roundToString(buffer);
+    $("#outputSoulPrice2").html(roundToString(buffer));
     totalFluxCosts += buffer;
   }
   //Show total flux costs
