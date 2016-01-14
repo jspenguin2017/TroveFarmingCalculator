@@ -144,7 +144,7 @@ var calculate = function(){
     totalFluxCosts += buffer;
   }
   //Show total flux costs
-  $("#outputTotalCosts").html(totalFluxCosts.toString());
+  $("#outputTotalCosts").html(roundToString(totalFluxCosts));
   //-----Gain-----
   shadowLevel += 1;
   starNumber = 0;
@@ -165,7 +165,7 @@ var calculate = function(){
   $("#outputSoulPrice3").html(roundToString(buffer));
   totalFluxGain += buffer;
   //Show total flux gain
-  $("#outputTotalGain").html(totalFluxGain.toString());
+  $("#outputTotalGain").html(roundToString(totalFluxGain));
   //-----Calculate profit-----
   var profit = totalFluxGain - totalFluxCosts;
   buffer = "<strong style='color:";
@@ -175,7 +175,7 @@ var calculate = function(){
     buffer += "red;'>"
   }
   buffer += "Profit: " + profit.toString() + "</strong>";
-  $("#outputProfit").html(buffer);
+  $("#outputProfit").html(roundToString(buffer));
   //All done, show results
   $("#outputResultsDiv").css("display", "inline");
   $("html, body").animate({scrollTop: $("#outputResultsDiv").offset().top}, "fast");
