@@ -6,7 +6,7 @@ var Database = {
   //Deconstruction values, thanks to the author of: 
   //https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=1022828731
   eye: 7, //Shadow 1 to 4 all give 7 eyes
-  //Flux: S level star
+  //Flux: fluxS+#level+#star
   //Shadow Level 1
   fluxS10: 25,
   fluxS11: 35,
@@ -47,7 +47,7 @@ var priceValidate = function(id, index){
     $(id + "Icon").addClass("glyphicon-remove");
     isValid[index] = false;
   }else if(valueBuffer < defaultPrices[index] / 2 || valueBuffer > defaultPrices[index] * 2){
-    //Warning: price far away from normal
+    //Warning: price far away from default
     $(id  + "Div").addClass("has-warning");
     $(id + "Icon").addClass("glyphicon-warning-sign");
     isValid[index] = true;
@@ -66,10 +66,14 @@ var calculate = function(){
     return;
   }
   //Prices are valid, start calculating
+  //Forging costs
   
+  //All done, show results
+  $("#ourputResultsDiv").css("display", "inline");
 };
 //Init
 window.onload = function(){
+  //Prices Validation
   $("#eyePrice").change(function(){
       priceValidate("#eyePrice", 0)
     });
@@ -97,8 +101,5 @@ window.onload = function(){
   $("#pentaPrice").val(defaultPrices[4]);
   priceValidate("#pentaPrice", 4);
   //Calculate! button
-  $("#theButton").click(function(){
-    $("#ourputResultsDiv").css("display", "inline");
-    calculate();
-  });
+  $("#theButton").click(calculate);
 };
