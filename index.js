@@ -45,7 +45,26 @@ $("#twicePrice").val(defaultPrices[1]);
 $("#thricePrice").val(defaultPrices[2]);
 $("#quadPrice").val(defaultPrices[3]);
 $("#pentaPrice").val(defaultPrices[4]);
-//Function for "Calculate!" button
+//Database and kernal function
+var Database = {
+  //Deconstruction values
+  eye: 7, //Shadow 1 to 4 all give 7 eyes
+  //Flux: S level star
+  //Shadow Level 1
+  fluxS10: 25;
+  fluxS11: 35,
+  fluxS12: 50,
+  fluxS13: 80,
+  fluxS14: 110,
+  fluxS15: 140,
+  //Shadow Level 2
+  fluxS10: 100;
+  fluxS11: 120,
+  fluxS12: 150,
+  fluxS13: 200,
+  fluxS14: 250,
+  fluxS15: 350,
+}
 var calculate = function(){
   
 };
