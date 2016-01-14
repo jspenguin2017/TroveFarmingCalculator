@@ -179,7 +179,7 @@ var calculate = function(){
   }else{
     buffer += "red;'>"
   }
-  buffer += "Profit: " + roundToString(profit) + "</strong>";
+  buffer += "Profit: " + roundToString(profit) + " flux</strong>";
   $("#outputProfit").html(buffer);
   //All done, show results
   $("#outputResultsDiv").css("display", "inline");
