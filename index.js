@@ -83,7 +83,7 @@ var Database = {
 var calculate = function(){
   
 };
-$("#theButton").click(funciton(){
+$("#theButton").click(function(){
   $("#ourputResultsDiv").css("display", "inline");
   calculate();
 });
