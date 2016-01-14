@@ -38,16 +38,16 @@
         </div>
       </div>
     </noscript>
-    <!-- Messages -->
+    <!-- Welcome -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Welcome</h1>
+        <h2>Welcome</h2>
         <br>
-        <p>This tool will give you an approximate profit in flux from foring a Shadow gear looted from dungeon to next level 0 stars then deconstruct it. It's rarely profitable to forge a gear for more than one level. </p>
+        <p>This tool will tell you what you should do with the Shadow gear that you looted from a dungeon. </p>
         <p>Shadow Level 5 and higher gears should not be forged before decomposing. Depending on the gear, you might want to sell it in Trade chat. </p>
         <br>
         <!-- Part 1 -->
-        <p id="step1"><strong>Step 1: </strong>Enter current prices</p>
+        <p id="step1"><strong>Step 1: </strong>Enter current prices (optional, but recommended)</p>
         <p style="color:#008000;">Green: valid, please move on. </p>
         <p style="color:#B36B00;">Yellow: price is way off the default value, please double check. </p>
         <p style="color:#993333;">Red: invalid, please enter numeric prices. </p>
@@ -108,7 +108,7 @@
         </table>
         <br>
         <!-- Part 2 -->
-        <p id="step2"><strong>Step 2: </strong>Enter the data of the gear that you plan to forge: </p>
+        <p id="step2"><strong>Step 2: </strong>Select the level and stars of the gear: </p>
          <table class="table"  style="max-width:600px;">
           <thead>
             <tr>
@@ -148,87 +148,104 @@
         <p><strong>Step 3: </strong></p>
         <button type="button" class="btn btn-primary" id="theButton">Calculate!</button>
         <br><br>
-        <!-- Results -->
         <div id="outputResultsDiv" style="display:none;">
           <br>
           <!-- Profit Output -->
           <p id="outputProfit"></p>
-          <br>
-          <!-- Details -->
-          <p>Costs: </p>
-          <table class="table" style="max-width:600px;">
-            <tbody>
-              <tr>
-                <td style="width:65%;"><strong>Forging costs</strong></td>
-                <td style="width:35%;"><strong>Costs (in flux)</strong></td>
-              </tr>
-              <tr>
-                <td id="outputEyeQuantity1"></td>
-                <td id="outputEyePrice1"></td>
-              </tr>
-              <tr>
-                <td id="outputFluxQuantity1"></td>
-                <td id="outputFluxPrice1"></td>
-              </tr>
-              <tr>
-                <td id="outputSoulType1"></td>
-                <td id="outputSoulPrice1"></td>
-              </tr>
-              <tr>
-                <td><strong>Loss from not deconstructing looted gear</strong></td>
-                <td><strong>Costs (in flux)</strong></td>
-              </tr>
-              <tr>
-                <td id="outputEyeQuantity2"></td>
-                <td id="outputEyePrice2"></td>
-              </tr>
-              <tr>
-                <td id="outputFluxQuantity2"></td>
-                <td id="outputFluxPrice2"></td>
-              </tr>
-              <tr>
-                <td id="outputSoulType2"></td>
-                <td id="outputSoulPrice2"></td>
-              </tr>
-              <tr>
-                <td><strong>Total flux costs</strong></td>
-                <td id="outputTotalCosts"></td>
-              </tr>
-            </tbody>
-          </table>
-          <p>Gain: </p>
-          <table class="table" style="max-width:600px;">
-            <tbody>
-              <tr>
-                <td style="width:65%;"><strong>Deconstructing 0 stars forged gear</strong></td>
-                <td style="width:35%;"><strong>Gain (in flux)</strong></td>
-              </tr>
-              <tr>
-                <td id="outputEyeQuantity3"></td>
-                <td id="outputEyePrice3"></td>
-              </tr>
-              <tr>
-                <td id="outputFluxQuantity3"></td>
-                <td id="outputFluxPrice3"></td>
-              </tr>
-              <tr>
-                <td id="outputSoulType3"></td>
-                <td id="outputSoulPrice3"></td>
-              </tr>
-              <tr>
-                <td><strong>Total flux gain</strong></td>
-                <td id="outputTotalGain"></td>
-              </tr>
-            </tbody>
-          </table>
         </div>
+      </div>
+    </div>
+    <!-- Detailed Math -->
+    <div class="jumbotron" id="outputMath" style="display:none;">
+      <div class="container">
+        <h2>Detailed Math</h2>
+        <!-- Deconstruct Directly -->
         <br>
+        <p id="outputDeconProfit"><strong>Deconstruct Directly</strong></p>
+        <p>Gain: </p>
+        <table class="table" style="max-width:600px;">
+          <tbody>
+            <tr>
+              <td style="width:65%;"><strong>Material</strong></td>
+              <td style="width:35%;"><strong>Gain (in flux)</strong></td>
+            </tr>
+            <tr>
+              <td id="outputEyeQuantity0Gain">Eyes</td>
+              <td id="outputEyePrice0Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputFluxQuantity0Gain">Flux</td>
+              <td id="outputFluxPrice0Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputSoulType0Gain">Forged Souls</td>
+              <td id="outputSoulPrice0Gain"></td>
+            </tr>
+            <tr>
+              <td><strong>Total flux gain</strong></td>
+              <td id="outputTotalGain0"></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Forging Once -->
+        <br>
+        <p id="outputForge1Profit"><strong>Deconstruct Directly</strong></p>
+        <p>Costs: </p>
+        <table class="table" style="max-width:600px;">
+          <tbody>
+            <tr>
+              <td style="width:65%;"><strong>Material</strong></td>
+              <td style="width:35%;"><strong>Costs (in flux)</strong></td>
+            </tr>
+            <tr>
+              <td id="outputEyeQuantity1Costs">Eyes</td>
+              <td id="outputEyePrice1Costs"></td>
+            </tr>
+            <tr>
+              <td id="outputFluxQuantity1Costs">Flux</td>
+              <td id="outputFluxPrice1Costs"></td>
+            </tr>
+            <tr>
+              <td id="outputSoulType1Costs">Forged Souls</td>
+              <td id="outputSoulPrice1Costs"></td>
+            </tr>
+            <tr>
+              <td><strong>Total flux gain</strong></td>
+              <td id="outputTotalCosts1"></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Gain: </p>
+        <table class="table" style="max-width:600px;">
+          <tbody>
+            <tr>
+              <td style="width:65%;"><strong>Material</strong></td>
+              <td style="width:35%;"><strong>Gain (in flux)</strong></td>
+            </tr>
+            <tr>
+              <td id="outputEyeQuantity1Gain">Eyes</td>
+              <td id="outputEyePrice1Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputFluxQuantity1Gain">Flux</td>
+              <td id="outputFluxPrice1Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputSoulType1Gain">Forged Souls</td>
+              <td id="outputSoulPrice1Gain"></td>
+            </tr>
+            <tr>
+              <td><strong>Total flux gain</strong></td>
+              <td id="outputTotalGain1"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <!-- Contacts -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Contacts</h1>
+        <h2>Contacts</h2>
         <p>If you have found any problems (including typos), please find me in-game (500Minions), on Reddit (x01x012013), or on the forum (500Minions). </p>
         <p>I do not guarantee anything, and I am not responsible for your loss. </p>
       </div>
@@ -236,7 +253,7 @@
     <!-- Source Files -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Source Files</h1>
+        <h2>Source Files</h2>
         <a style="font-size:21px;" href="https://github.com/X01X012013/Trove" target="_blank">View on GitHub</a>
         <br><br>
       </div>
@@ -244,7 +261,7 @@
     <!-- Credits -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Credits</h1>
+        <h2>Credits</h2>
         <a style="font-size:21px;" href="https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=1022828731" target="_blank">Deconstruction Values</a>
         <br>
         <a style="font-size:21px;" href="https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=0" target="_blank">Forging Costs</a>
