@@ -81,7 +81,9 @@ var Database = {
   fluxS45: 1700
 }
 var calculate = function(){
-  
+  if(!(isValid[0] && isValid[1] && isValid[2] && isValid[3] && isValid[4])){
+    $("html, body").animate({scrollTop: $("#step1").offset().top}, "fast");
+  }
 };
 $("#theButton").click(function(){
   $("#ourputResultsDiv").css("display", "inline");
