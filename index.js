@@ -176,8 +176,8 @@ var calculate = function(){
   }else{
     buffer += "red;'>"
   }
-  buffer += "Profit: " + profit.toString() + "</strong>";
-  $("#outputProfit").html(roundToString(buffer));
+  buffer += "Profit: " + roundToString(profit) + "</strong>";
+  $("#outputProfit").html(buffer);
   //All done, show results
   $("#outputResultsDiv").css("display", "inline");
   $("html, body").animate({scrollTop: $("#outputResultsDiv").offset().top}, "fast");
