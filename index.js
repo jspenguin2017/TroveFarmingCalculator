@@ -183,7 +183,7 @@ var calculate = function(){
   $("#outputProfit").html(buffer);
   //All done, show results
   $("#outputResultsDiv").css("display", "inline");
-  $("html, body").animate({scrollTop: $("#outputResultsDiv").offset().top}, "fast");
+  $("html, body").animate({scrollTop: $("#step2").offset().top}, "fast");
 };
 //Init
 window.onload = function(){
