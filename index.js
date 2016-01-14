@@ -54,7 +54,7 @@ var Database = {
   S3: "Thrice", 
   S4: "Quad", 
   S5: "Penta"
-}
+};
 //On change validation
 var priceValidate = function(id, index){
   var valueBuffer = parseFloat($(id).val());
@@ -84,7 +84,7 @@ var priceValidate = function(id, index){
 //Math
 var roundToString = function(input){
   return (Math.round(input * 1000) / 1000).toString();
-}
+};
 //Kernal
 var calculate = function(){
   //Check if prices are valid
