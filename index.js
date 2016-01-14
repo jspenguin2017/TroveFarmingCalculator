@@ -82,8 +82,19 @@ var calculate = function(){
     return;
   }
   //Prices are valid, start calculating
-  //Forging costs
-  var shadowLevel = 
+  //-----Forging costs-----
+  var shadowLevel = parseInt($("#shadowLevel").val());
+  var starNeeded = 5 - parseInt($("#starNumber").val());
+  var totalCostFlux = 0;
+  //Eye
+  var eyeBuffer = 0;
+  if(shadowLevel === 1){
+    //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
+    eyeBuffer += 50;
+  }
+  eyeBuffer += Database["forgeS" + shadowLevel + "Eye"] * starNeeded;
+  $("#ourputEyeQuantity1").html("Eyes (" + eyeBuffer.toString() + ")")
+  totalCostFlux = eyeBuffer * defaultPrices[0];
   //All done, show results
   $("#ourputResultsDiv").css("display", "inline");
 };
