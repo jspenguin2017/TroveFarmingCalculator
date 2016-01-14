@@ -34,7 +34,17 @@ var Database = {
   fluxS42: 1200,
   fluxS43: 1300,
   fluxS44: 1500,
-  fluxS45: 1700
+  fluxS45: 1700,
+  //Forging costs, thanks to the author of: 
+  //https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=0
+  forgeS1Flux: 75,
+  forgeS1Eye: 10,
+  forgeS2Flux: 150,
+  forgeS2Eye: 15,
+  forgeS3Flux: 250,
+  forgeS3Eye: 30,
+  forgeS4Flux: 400,
+  forgeS4Eye: 50
 }
 //On change validation
 var priceValidate = function(id, index){
@@ -67,7 +77,7 @@ var calculate = function(){
   }
   //Prices are valid, start calculating
   //Forging costs
-  
+  var shadowLevel = 
   //All done, show results
   $("#ourputResultsDiv").css("display", "inline");
 };
