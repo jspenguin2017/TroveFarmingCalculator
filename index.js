@@ -142,10 +142,10 @@ var calculate = function(){
   //Show total flux costs
   $("#outputTotalCosts").html(totalFluxCosts.toString());
   //-----Gain-----
-  var shadowLevel +=1;
-  var starNumber = 0;
+  shadowLevel += 1;
+  starNumber = 0;
+  buffer = 0;
   var totalFluxGain = 0;
-  var buffer = 0;
   //Eyes
   $("#outputEyeQuantity3").html("Eyes (" + Database["eyes"] + ")");
   $("#outputEyePrice3").html((Database["eyes"] * defaultPrices[0]).toString());
