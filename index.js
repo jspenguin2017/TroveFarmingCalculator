@@ -209,8 +209,8 @@ var calculate = function(){
     $("#outputTotalGain" + forgedTime).html(roundToString(totalFluxGain));
     //Calculate profit
     totalFluxGain -= totalFluxCosts
-    $("#outputDeconProfit").html("<strong>Forge to Shadow Level " + shadowLevel + " 0 stars: " + roundToString(totalFluxGain) + " flux profit</strong>");
-    $("#outputDeconProfit").css("color", (totalFluxGain > 0)? "#B36B00" : "#993333");
+    $("#outputForge" + forgedTime + "Profit").html("<strong>Forge to Shadow Level " + shadowLevel + " 0 stars: " + roundToString(totalFluxGain) + " flux profit</strong>");
+    $("#outputForge" + forgedTime + "Profit").css("color", (totalFluxGain > 0)? "#B36B00" : "#993333");
     profits.push(totalFluxGain);
     messages.push("Forge to Shadow Level " + shadowLevel + " 0 stars is the best choice, your profit is " + totalFluxGain + " flux. ");
     //Show the table
@@ -226,6 +226,7 @@ var calculate = function(){
   $("#outputProfit").html("<strong>" + messages[indexOfBest] + "</storng>");
   $("#outputProfit").css("color", "#008000");
   $("#outputMath").css("display", "block");
+  $("#outputResultsDiv").css("display", "block");
   $("html, body").animate({scrollTop: $("#step2").offset().top}, "fast");
 };
 //Init
