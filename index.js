@@ -127,10 +127,18 @@ var calculate = function(){
     totalFluxGain += buffer;
   }
   $("#outputTotalGain0").html(roundToString(totalFluxGain));
+  $("#outputDeconProfit").html("<strong>Deconstruct Directly: " + roundToString(totalFluxGain) + " flux profit</strong>");
+  $("#outputDeconProfit").css("color", (totalFluxGain > 0)? "#B36B00" : "#993333");
   profits.push(totalFluxGain);
   messages.push("Deconstruct Directly is the best choice, your profit is " + totalFluxGain + " flux. ");
   //-----Forge-----
   while(shadowLevel <= 5){
+    //Initialize
+    totalFluxGain = 0;
+    totalFluxCosts = 0;
+    buffer = 0;
+    //Costs
+    
     break;
   }
   //All done, show results
