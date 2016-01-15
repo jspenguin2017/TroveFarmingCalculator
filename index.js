@@ -146,7 +146,7 @@ var calculate = function(){
   //-----Forge-----
   totalFluxCosts = 0;
   var forgedTime = 0;
-  while(shadowLevel <= 5){
+  while(shadowLevel < 5){
     //Initialize
     forgedTime += 1;
     //---Costs---
