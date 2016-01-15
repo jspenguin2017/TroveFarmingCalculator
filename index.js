@@ -137,7 +137,6 @@ var calculate = function(){
   while(shadowLevel <= 5){
     //Initialize
     forgedTime += 1;
-    totalFluxGain = 0;
     //---Costs---
     //Previous Costs
     if(forgedTime !== 1){
@@ -177,14 +176,33 @@ var calculate = function(){
     shadowLevel += 1;
     starNumber = 0;
     //---Gain---
+    buffer = 0;
+    totalFluxGain = 0;
+    //Eyes
+    $("#outputEyeQuantity" + forgedTime + "Gain").html("Eyes (" + Database["eyes"] + ")");
+    $("#outputEyePrice" + forgedTime + "Gain").html(roundToString(Database["eyes"] * enteredPrices[0]));
+    totalFluxGain += Database["eyes"] * enteredPrices[0];
+    //Flux
+    buffer = Database["fluxS" + shadowLevel + starNumber];
+     $("#outputFluxQuantity" + forgedTime + "Gain").html("Flux (" + buffer.toString() + ")");
+    $("#outputFluxPrice" + forgedTime + "Gain").html(buffer);
+    totalFluxGain += buffer;
+    //Forged souls
+    $("#outputSoulType" + forgedTime + "Gain").html(Database["S" + shadowLevel] + " (1)");
+    buffer = enteredPrices[shadowLevel - 1];
+    $("#outputSoulPrice" + forgedTime + "Gain").html(roundToString(buffer));
+    totalFluxGain += buffer;
+    //Total
+    $("#outputTotalGain" + forgedTime).html(roundToString(totalFluxGain));
+    //Calculate profit
+    totalFluxGain -= totalFluxCosts
     $("#outputDeconProfit").html("<strong>Forge to Shadow Level " + shadowLevel + " 0 stars: " + roundToString(totalFluxGain) + " flux profit</strong>");
     $("#outputDeconProfit").css("color", (totalFluxGain > 0)? "#B36B00" : "#993333");
     profits.push(totalFluxGain);
     messages.push("Forge to Shadow Level " + shadowLevel + " 0 stars is the best choice, your profit is " + totalFluxGain + " flux. ");
     //Show the table
     $("#outputForge" + forgedTime + "Div").css("display", "inline");
-
-  
+  }
   //Show total flux costs
   $("#outputTotalCosts").html(roundToString(totalFluxCosts));
     break;
