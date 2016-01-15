@@ -1,6 +1,6 @@
 //Variables
-var defaultPrices = [3.8, 900, 3700, 13000, 39000];
-var enteredPrices = [3.8, 900, 3700, 13000, 39000];
+var defaultPrices = [3.8, 900, 3700, 13000, 39700];
+var enteredPrices = [3.8, 900, 3700, 13000, 39700];
 var isValid = [true, true, true, true, true];
 //Database
 var Database = {
@@ -96,93 +96,37 @@ var calculate = function(){
   //Prices are valid, start calculating
   var shadowLevel = parseInt($("#shadowLevel").val());
   var starNumber = parseInt($("#starNumber").val());
-  var starNeeded = 5 - starNumber;
-  var totalFluxCosts = 0;
-  var buffer = 0;
-  //-----Forging costs-----
-  //Eyes
+  var profits = []; //Holds profit of each forging method
+  var messages = []; //Holds the message to be shown at the end
+  var totalFluxGain, totalFluxCosts, buffer; //Variables for calculations
+  //-----Deconstruct Directly-----
+  totalFluxGain = 0;
   buffer = 0;
-  if(shadowLevel === 1){
-    //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
-    buffer += 50;
-  }
-  buffer += Database["forgeS" + shadowLevel + "Eye"] * starNeeded;
-  $("#outputEyeQuantity1").html("Eyes (" + buffer.toString() + ")");
-  $("#outputEyePrice1").html(roundToString(buffer * enteredPrices[0]));
-  totalFluxCosts += buffer * enteredPrices[0];
-  //Flux
-  buffer = 0;
-  if(shadowLevel === 1){
-    //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
-    buffer += 500;
-  }
-  buffer += Database["forgeS" + shadowLevel + "Flux"] * starNeeded;
-  $("#outputFluxQuantity1").html("Flux (" + buffer.toString() + ")");
-  $("#outputFluxPrice1").html(buffer);
-  totalFluxCosts += buffer;
-  //Forged souls
-  $("#outputSoulType1").html((shadowLevel === 1)? Database["S1"] : Database["S" + shadowLevel] + " (2)");
-  if(shadowLevel === 1){
-    $("#outputSoulPrice1").html("0");
-  }else{
-    buffer = enteredPrices[shadowLevel - 1] * 2;
-    $("#outputSoulPrice1").html(roundToString(buffer));
-    totalFluxCosts += buffer;
-  }
-  //-----Loss-----
   //Eyes
-  $("#outputEyeQuantity2").html("Eyes (" + Database["eyes"] + ")");
-  $("#outputEyePrice2").html(roundToString(Database["eyes"] * enteredPrices[0]));
-  totalFluxCosts += Database["eyes"] * enteredPrices[0];
+  buffer = Database["eyes"] * enteredPrices[0];
+  $("#outputEyeQuantity0Gain").html("Eyes (" + Database["eyes"] + ")");
+  $("#outputEyePrice0Gain").html(roundToString(buffer));
+  totalFluxGain += buffer;
   //Flux
   buffer = Database["fluxS" + shadowLevel + starNumber];
-  $("#outputFluxQuantity2").html("Flux (" + buffer.toString() + ")");
-  $("#outputFluxPrice2").html(buffer);
-  totalFluxCosts += buffer;
+  $("#outputFluxQuantity0Gain").html("Flux (" + buffer.toString() + ")");
+  $("#outputFluxPrice0Gain").html(roundToString(buffer));
+  totalFluxGain += buffer;
   //Forged souls
-  $("#outputSoulType2").html((shadowLevel === 1)? Database["S1"] : Database["S" + shadowLevel] + " (1)");
+  $("#outputSoulType0Gain").html((shadowLevel === 1)? Database["S1"] : Database["S" + shadowLevel] + " (1)");
   if(shadowLevel === 1){
-    $("#outputSoulPrice2").html("0");
+    $("#outputSoulPrice0Gain").html("0");
   }else{
     buffer = enteredPrices[shadowLevel - 1];
-    $("#outputSoulPrice2").html(roundToString(buffer));
-    totalFluxCosts += buffer;
+    $("#outputSoulPrice0Gain").html(roundToString(buffer));
+    totalFluxGain += buffer;
   }
-  //Show total flux costs
-  $("#outputTotalCosts").html(roundToString(totalFluxCosts));
-  //-----Gain-----
-  shadowLevel += 1;
-  starNumber = 0;
-  buffer = 0;
-  var totalFluxGain = 0;
-  //Eyes
-  $("#outputEyeQuantity3").html("Eyes (" + Database["eyes"] + ")");
-  $("#outputEyePrice3").html(roundToString(Database["eyes"] * enteredPrices[0]));
-  totalFluxGain += Database["eyes"] * enteredPrices[0];
-  //Flux
-  buffer = Database["fluxS" + shadowLevel + starNumber];
-  $("#outputFluxQuantity3").html("Flux (" + buffer.toString() + ")");
-  $("#outputFluxPrice3").html(buffer);
-  totalFluxGain += buffer;
-  //Forged souls
-  $("#outputSoulType3").html(Database["S" + shadowLevel] + " (1)");
-  buffer = enteredPrices[shadowLevel - 1];
-  $("#outputSoulPrice3").html(roundToString(buffer));
-  totalFluxGain += buffer;
-  //Show total flux gain
-  $("#outputTotalGain").html(roundToString(totalFluxGain));
-  //-----Calculate profit-----
-  var profit = totalFluxGain - totalFluxCosts;
-  buffer = "<strong style='color:";
-  if(profit > 0){
-    buffer += "green;'>";
-  }else{
-    buffer += "red;'>"
-  }
-  buffer += "Profit: " + roundToString(profit) + " flux</strong>";
-  $("#outputProfit").html(buffer);
+  $("#outputTotalGain0").html(roundToString(totalFluxGain));
+  profits.push(totalFluxGain);
+  messages.push("Deconstruct Directly is the best choice, your profit is " + totalFluxGain + " flux. ");
+  //-----Forge-----
   //All done, show results
-  $("#outputResultsDiv").css("display", "inline");
+  $("#outputMath").css("display", "inline");
   $("html, body").animate({scrollTop: $("#step2").offset().top}, "fast");
 };
 //Init
