@@ -203,11 +203,9 @@ var calculate = function(){
     //Show the table
     $("#outputForge" + forgedTime + "Div").css("display", "inline");
   }
-  //Show total flux costs
-  $("#outputTotalCosts").html(roundToString(totalFluxCosts));
-    break;
-  }
-  //All done, show results
+  //Find the best choice and show result
+  
+  
   $("#outputMath").css("display", "block");
   $("html, body").animate({scrollTop: $("#step2").offset().top}, "fast");
 };
