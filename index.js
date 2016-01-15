@@ -7,7 +7,7 @@ var Database = {
   //Deconstruction values, thanks to the author of: 
   //https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=1022828731
   eyes: 7, //Shadow 1 to 4 all give 7 eyes
-  //Flux: fluxS+#level+#star
+  //Flux: fluxS+#level+#stars
   //Shadow Level 1
   fluxS10: 25,
   fluxS11: 35,
@@ -150,6 +150,7 @@ var calculate = function(){
     //Initialize
     forgedTime += 1;
     //---Costs---
+    buffer = 0;
     //Previous Costs
     if(forgedTime !== 1){
       $("#outputPrevious" + forgedTime + "Costs").html(roundToString(totalFluxCosts));
