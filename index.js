@@ -95,7 +95,7 @@ var getIndexOfMax = function(input){
     }
   }
   return maxIndex;
-}
+};
 //Kernal
 var calculate = function(){
   //Check if prices are valid
