@@ -142,7 +142,7 @@ var calculate = function(){
   $("#outputDeconProfit").html("<strong>Deconstruct Directly: " + roundToString(totalFluxGain) + " flux profit</strong>");
   $("#outputDeconProfit").css("color", (totalFluxGain > 0)? "#B36B00" : "#993333");
   profits.push(totalFluxGain);
-  messages.push("Deconstruct Directly is the best choice, your profit is " + roundToString(totalFluxGain) + " flux. ");
+  messages.push("Deconstruct directly is the best choice, your profit is " + roundToString(totalFluxGain) + " flux. ");
   //-----Forge-----
   totalFluxCosts = 0;
   var forgedTime = 0;
