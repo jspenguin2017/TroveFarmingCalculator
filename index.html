@@ -156,13 +156,14 @@
       </div>
     </div>
     <!-- Detailed Math -->
+    <!-- It's a lot of repeated code, I could use JavaScript and loop it, but I will write it all out to make it easier to manage -->
     <div class="jumbotron" id="outputMath" style="display:none;">
       <div class="container">
         <h2>Detailed Math</h2>
         <!-- Deconstruct Directly -->
         <br>
         <p id="outputDeconProfit"><strong>Deconstruct Directly</strong></p>
-        <p>Gain: </p>
+        <p>Gain from deconstructing: </p>
         <table class="table" style="max-width:600px;">
           <tbody>
             <tr>
@@ -182,15 +183,15 @@
               <td id="outputSoulPrice0Gain"></td>
             </tr>
             <tr>
-              <td><strong>Total flux gain</strong></td>
+              <td><strong>Total Flux Gain</strong></td>
               <td id="outputTotalGain0"></td>
             </tr>
           </tbody>
         </table>
-        <!-- Forging Once -->
+        <!-- Forging One Level -->
         <br>
-        <p id="outputForge1Profit"><strong>Deconstruct Directly</strong></p>
-        <p>Costs: </p>
+        <p id="outputForge1Profit"><strong>Forging One Level</strong></p>
+        <p>Costs in forging: </p>
         <table class="table" style="max-width:600px;">
           <tbody>
             <tr>
@@ -210,12 +211,12 @@
               <td id="outputSoulPrice1Costs"></td>
             </tr>
             <tr>
-              <td><strong>Total flux gain</strong></td>
+              <td><strong>Total Flux Costs</strong></td>
               <td id="outputTotalCosts1"></td>
             </tr>
           </tbody>
         </table>
-        <p>Gain: </p>
+        <p>Gain from deconstructing: </p>
         <table class="table" style="max-width:600px;">
           <tbody>
             <tr>
@@ -235,8 +236,167 @@
               <td id="outputSoulPrice1Gain"></td>
             </tr>
             <tr>
-              <td><strong>Total flux gain</strong></td>
+              <td><strong>Total Flux Gain</strong></td>
               <td id="outputTotalGain1"></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Forging Two Level -->
+        <br>
+        <p id="outputForge2Profit"><strong>Forging Two Level</strong></p>
+        <p>Costs in forging: </p>
+        <table class="table" style="max-width:600px;">
+          <tbody>
+            <tr>
+              <td style="width:65%;"><strong>Material</strong></td>
+              <td style="width:35%;"><strong>Costs (in flux)</strong></td>
+            </tr>
+            <tr>
+              <td id="outputEyeQuantity2Costs">Eyes</td>
+              <td id="outputEyePrice2Costs"></td>
+            </tr>
+            <tr>
+              <td id="outputFluxQuantity2Costs">Flux</td>
+              <td id="outputFluxPrice2Costs"></td>
+            </tr>
+            <tr>
+              <td id="outputSoulType2Costs">Forged Souls</td>
+              <td id="outputSoulPrice2Costs"></td>
+            </tr>
+            <tr>
+              <td><strong>Total Flux Costs</strong></td>
+              <td id="outputTotalCosts2"></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Gain from deconstructing: </p>
+        <table class="table" style="max-width:600px;">
+          <tbody>
+            <tr>
+              <td style="width:65%;"><strong>Material</strong></td>
+              <td style="width:35%;"><strong>Gain (in flux)</strong></td>
+            </tr>
+            <tr>
+              <td id="outputEyeQuantity2Gain">Eyes</td>
+              <td id="outputEyePrice2Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputFluxQuantity2Gain">Flux</td>
+              <td id="outputFluxPrice2Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputSoulType2Gain">Forged Souls</td>
+              <td id="outputSoulPrice2Gain"></td>
+            </tr>
+            <tr>
+              <td><strong>Total Flux Gain</strong></td>
+              <td id="outputTotalGain2"></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Forging Three Level -->
+        <br>
+        <p id="outputForge1Profit"><strong>Forging Three Level</strong></p>
+        <p>Costs in forging: </p>
+        <table class="table" style="max-width:600px;">
+          <tbody>
+            <tr>
+              <td style="width:65%;"><strong>Material</strong></td>
+              <td style="width:35%;"><strong>Costs (in flux)</strong></td>
+            </tr>
+            <tr>
+              <td id="outputEyeQuantity3Costs">Eyes</td>
+              <td id="outputEyePrice3Costs"></td>
+            </tr>
+            <tr>
+              <td id="outputFluxQuantity3Costs">Flux</td>
+              <td id="outputFluxPrice3Costs"></td>
+            </tr>
+            <tr>
+              <td id="outputSoulType3Costs">Forged Souls</td>
+              <td id="outputSoulPrice3Costs"></td>
+            </tr>
+            <tr>
+              <td><strong>Total Flux Costs</strong></td>
+              <td id="outputTotalCosts3"></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Gain from deconstructing: </p>
+        <table class="table" style="max-width:600px;">
+          <tbody>
+            <tr>
+              <td style="width:65%;"><strong>Material</strong></td>
+              <td style="width:35%;"><strong>Gain (in flux)</strong></td>
+            </tr>
+            <tr>
+              <td id="outputEyeQuantity3Gain">Eyes</td>
+              <td id="outputEyePrice3Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputFluxQuantity3Gain">Flux</td>
+              <td id="outputFluxPrice3Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputSoulType3Gain">Forged Souls</td>
+              <td id="outputSoulPrice3Gain"></td>
+            </tr>
+            <tr>
+              <td><strong>Total Flux Gain</strong></td>
+              <td id="outputTotalGain3"></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Forging Four Level -->
+        <br>
+        <p id="outputForge1Profit"><strong>Forging Four Level</strong></p>
+        <p>Costs in forging: </p>
+        <table class="table" style="max-width:600px;">
+          <tbody>
+            <tr>
+              <td style="width:65%;"><strong>Material</strong></td>
+              <td style="width:35%;"><strong>Costs (in flux)</strong></td>
+            </tr>
+            <tr>
+              <td id="outputEyeQuantity4Costs">Eyes</td>
+              <td id="outputEyePrice4Costs"></td>
+            </tr>
+            <tr>
+              <td id="outputFluxQuantity4Costs">Flux</td>
+              <td id="outputFluxPrice4Costs"></td>
+            </tr>
+            <tr>
+              <td id="outputSoulType4Costs">Forged Souls</td>
+              <td id="outputSoulPrice4Costs"></td>
+            </tr>
+            <tr>
+              <td><strong>Total Flux Costs</strong></td>
+              <td id="outputTotalCosts4"></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Gain from deconstructing: </p>
+        <table class="table" style="max-width:600px;">
+          <tbody>
+            <tr>
+              <td style="width:65%;"><strong>Material</strong></td>
+              <td style="width:35%;"><strong>Gain (in flux)</strong></td>
+            </tr>
+            <tr>
+              <td id="outputEyeQuantity4Gain">Eyes</td>
+              <td id="outputEyePrice4Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputFluxQuantity4Gain">Flux</td>
+              <td id="outputFluxPrice4Gain"></td>
+            </tr>
+            <tr>
+              <td id="outputSoulType4Gain">Forged Souls</td>
+              <td id="outputSoulPrice4Gain"></td>
+            </tr>
+            <tr>
+              <td><strong>Total Flux Gain</strong></td>
+              <td id="outputTotalGain4"></td>
             </tr>
           </tbody>
         </table>
