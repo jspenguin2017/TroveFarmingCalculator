@@ -94,11 +94,16 @@ var calculate = function(){
     return;
   }
   //Prices are valid, start calculating
+  //Variables
   var shadowLevel = parseInt($("#shadowLevel").val());
   var starNumber = parseInt($("#starNumber").val());
   var profits = []; //Holds profit of each forging method
   var messages = []; //Holds the message to be shown at the end
   var totalFluxGain, totalFluxCosts, buffer; //Variables for calculations
+  //Initialize - hide all forging div's
+  for(var i = 1; i <= 4; i++){
+    $("#outputForge" + i + "Div").css("display", "none");
+  }
   //-----Deconstruct Directly-----
   totalFluxGain = 0;
   buffer = 0;
@@ -125,6 +130,9 @@ var calculate = function(){
   profits.push(totalFluxGain);
   messages.push("Deconstruct Directly is the best choice, your profit is " + totalFluxGain + " flux. ");
   //-----Forge-----
+  while(shadowLevel <= 5){
+    break;
+  }
   //All done, show results
   $("#outputMath").css("display", "inline");
   $("html, body").animate({scrollTop: $("#step2").offset().top}, "fast");
