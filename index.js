@@ -126,19 +126,67 @@ var calculate = function(){
     $("#outputSoulPrice0Gain").html(roundToString(buffer));
     totalFluxGain += buffer;
   }
-  $("#outputTotalGain0").html(roundToString(totalFluxGain));
+  $("#outputTotalGain0").html("<strong>" + roundToString(totalFluxGain) + "</strong>");
   $("#outputDeconProfit").html("<strong>Deconstruct Directly: " + roundToString(totalFluxGain) + " flux profit</strong>");
   $("#outputDeconProfit").css("color", (totalFluxGain > 0)? "#B36B00" : "#993333");
   profits.push(totalFluxGain);
   messages.push("Deconstruct Directly is the best choice, your profit is " + totalFluxGain + " flux. ");
   //-----Forge-----
+  totalFluxCosts = 0;
+  var forgedTime = 0;
   while(shadowLevel <= 5){
     //Initialize
+    forgedTime += 1;
     totalFluxGain = 0;
-    totalFluxCosts = 0;
+    //---Costs---
+    //Previous Costs
+    if(forgedTime !== 1){
+      $("#outputPrevious" + forgedTime + "Costs").html(roundToString(totalFluxCosts));
+    }
+    //Eyes
     buffer = 0;
-    //Costs
-    
+    if(shadowLevel === 1){
+      //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
+      buffer += 50;
+    }
+    buffer += Database["forgeS" + shadowLevel + "Eye"] * starNeeded;
+    $("#outputEyeQuantity" + forgedTime + "Costs").html("Eyes (" + buffer.toString() + ")");
+    $("#outputEyePrice" + forgedTime + "Costs").html(roundToString(buffer * enteredPrices[0]));
+    totalFluxCosts += buffer * enteredPrices[0];
+    //Flux
+    buffer = 0;
+    if(shadowLevel === 1){
+      //Shadow Level 1 costs 500 flux and 50 eyes, unlike other levels
+      buffer += 500;
+    }
+    buffer += Database["forgeS" + shadowLevel + "Flux"] * starNeeded;
+    $("#outputFluxQuantity" + forgedTime + "Costs").html("Flux (" + buffer.toString() + ")");
+    $("#outputFluxPrice" + forgedTime + "Costs").html(buffer);
+    totalFluxCosts += buffer;
+    //Forged souls
+    $("#outputSoulType" + forgedTime + "Costs").html((shadowLevel === 1)? Database["S1"] : Database["S" + shadowLevel] + " (2)");
+    if(shadowLevel === 1){
+      $("#outputSoulPrice" + forgedTime + "Costs").html("0");
+    }else{
+      buffer = enteredPrices[shadowLevel - 1] * 2;
+      $("#outputSoulPrice" + forgedTime + "Costs").html(roundToString(buffer));
+      totalFluxCosts += buffer;
+    }
+    //Total costs
+    $("#outputTotalCosts" + forgedTime).html("<strong>" + roundToString(totalFluxCosts) + "</strong>");
+    shadowLevel += 1;
+    starNumber = 0;
+    //---Gain---
+    $("#outputDeconProfit").html("<strong>Forge to Shadow Level " + shadowLevel + " 0 stars: " + roundToString(totalFluxGain) + " flux profit</strong>");
+    $("#outputDeconProfit").css("color", (totalFluxGain > 0)? "#B36B00" : "#993333");
+    profits.push(totalFluxGain);
+    messages.push("Forge to Shadow Level " + shadowLevel + " 0 stars is the best choice, your profit is " + totalFluxGain + " flux. ");
+    //Show the table
+    $("#outputForge" + forgedTime + "Div").css("display", "inline");
+
+  
+  //Show total flux costs
+  $("#outputTotalCosts").html(roundToString(totalFluxCosts));
     break;
   }
   //All done, show results
