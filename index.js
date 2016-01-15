@@ -85,6 +85,17 @@ var priceValidate = function(id, index){
 var roundToString = function(input){
   return (Math.round(input * 1000) / 1000).toString();
 };
+var getIndexOfMax = function(input){
+  var max = input[0];
+  var maxIndex = 0;
+  for(var i = 1; i < input.length; i++){
+    if(input[i] > max){
+        maxIndex = i;
+        max = input[i];
+    }
+  }
+  return maxIndex;
+}
 //Kernal
 var calculate = function(){
   //Check if prices are valid
@@ -204,8 +215,14 @@ var calculate = function(){
     $("#outputForge" + forgedTime + "Div").css("display", "inline");
   }
   //Find the best choice and show result
-  
-  
+  var indexOfBest = getIndexOfMax(profits);
+  if(indexOfBest === 0){
+    $("#outputDeconProfit").css("color", "#008000");
+  }else{
+    $("#outputForge" + indexOfBest + "Profit").css("color", "#008000");
+  }
+  $("#outputProfit").html("<strong>" + messages[indexOfBest] + "</storng>");
+  $("#outputProfit").css("color", "#008000");
   $("#outputMath").css("display", "block");
   $("html, body").animate({scrollTop: $("#step2").offset().top}, "fast");
 };
