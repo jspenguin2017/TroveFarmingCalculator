@@ -134,7 +134,7 @@ var calculate = function(){
     break;
   }
   //All done, show results
-  $("#outputMath").css("display", "inline");
+  $("#outputMath").css("display", "block");
   $("html, body").animate({scrollTop: $("#step2").offset().top}, "fast");
 };
 //Init
