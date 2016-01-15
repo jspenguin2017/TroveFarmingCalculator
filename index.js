@@ -108,6 +108,7 @@ var calculate = function(){
   //Variables
   var shadowLevel = parseInt($("#shadowLevel").val());
   var starNumber = parseInt($("#starNumber").val());
+  var starNeeded = 5 - starNumber;
   var profits = []; //Holds profit of each forging method
   var messages = []; //Holds the message to be shown at the end
   var totalFluxGain, totalFluxCosts, buffer; //Variables for calculations
@@ -186,6 +187,7 @@ var calculate = function(){
     $("#outputTotalCosts" + forgedTime).html("<strong>" + roundToString(totalFluxCosts) + "</strong>");
     shadowLevel += 1;
     starNumber = 0;
+    starNeeded = 5;
     //---Gain---
     buffer = 0;
     totalFluxGain = 0;
