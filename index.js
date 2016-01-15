@@ -1,6 +1,6 @@
 //Variables
-var defaultPrices = [3.8, 900, 3700, 13000, 39700];
-var enteredPrices = [3.8, 900, 3700, 13000, 39700];
+var defaultPrices = [4, 850, 3700, 12600, 39900];
+var enteredPrices = defaultPrices.slice();
 var isValid = [true, true, true, true, true];
 //Database
 var Database = {
