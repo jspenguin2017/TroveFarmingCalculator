@@ -210,10 +210,13 @@ var calculate = function(){
     $("#outputTotalGain" + forgedTime).html("<strong>" + roundToString(totalFluxGain) + "</strong>");
     //Calculate profit
     totalFluxGain -= totalFluxCosts
-    $("#outputForge" + forgedTime + "Profit").html("<strong>Forge to Shadow Level " + shadowLevel + ", 0 Stars and Deconstruct: " + roundToString(totalFluxGain) + " flux profit</strong>");
+    $("#outputForge" + forgedTime + "Profit").html("<strong>Forge to Shadow Level " + shadowLevel + ", 0 Stars and Deconstruct: " + 
+      roundToString(totalFluxGain) + " flux profit</strong>");
     $("#outputForge" + forgedTime + "Profit").css("color", (totalFluxGain > 0)? "#B36B00" : "#993333");
     profits.push(totalFluxGain);
-    messages.push("Forging to Shadow Level " + shadowLevel.toString() + ", 0 stars and deconstruct is the best choice, your profit is " + roundToString(totalFluxGain) + " flux. ");
+    messages.push("Forging to Shadow Level " + shadowLevel.toString() + ", 0 stars and deconstruct is the best choice, " + 
+      "your profit is " + roundToString(totalFluxGain) + " flux, " + roundToString(totalFluxGain - profits[0]) + 
+      " flux more than deconstruct directly. ");
     //Show the table
     $("#outputForge" + forgedTime + "Div").css("display", "inline");
   }
