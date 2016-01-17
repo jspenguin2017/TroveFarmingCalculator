@@ -62,20 +62,23 @@ var priceValidate = function(id, index){
   $(id + "Icon").removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove")
   if(isNaN(valueBuffer) || valueBuffer < 0){
     //Not valid
-    $(id  + "Div").addClass("has-error");
+    $(id + "Div").addClass("has-error");
     $(id + "Icon").addClass("glyphicon-remove");
+    $(id + "Label").css("color", "#993333");
     isValid[index] = false;
   }else if(valueBuffer < defaultPrices[index] / 2 || valueBuffer > defaultPrices[index] * 2){
     //Warning: price far away from default
-    $(id  + "Div").addClass("has-warning");
+    $(id + "Div").addClass("has-warning");
     $(id + "Icon").addClass("glyphicon-warning-sign");
+    $(id + "Label").css("color", "#B36B00");
     $(id).val(valueBuffer);
     isValid[index] = true;
     enteredPrices[index] = valueBuffer;
   }else{
     //Passed all tests
-    $(id  + "Div").addClass("has-success");
+    $(id + "Div").addClass("has-success");
     $(id + "Icon").addClass("glyphicon-ok");
+    $(id + "Label").css("color", "#008000");
     $(id).val(valueBuffer);
     isValid[index] = true;
     enteredPrices[index] = valueBuffer;
