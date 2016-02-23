@@ -18,7 +18,7 @@ var lsRead = function(id, def){
     return def;
   }
   return buffer;
-}
+};
 var lsWrite = function(id, val){
   //Check if supported
   if(!lsSupport){
@@ -26,7 +26,7 @@ var lsWrite = function(id, val){
   }
   //Write data
   localStorage.setItem(id, val);
-}
+};
 //Database
 var Database = {
   //Deconstruction values, thanks to the author of: 
@@ -111,6 +111,14 @@ var priceValidate = function(oId, index){
     enteredPrices[index] = valueBuffer;
     lsWrite(oId, valueBuffer);
   }
+};
+//Validate all
+var validAll = function(){
+  priceValidate("eyePrice", 0);
+  priceValidate("twicePrice", 1);
+  priceValidate("thricePrice", 2);
+  priceValidate("quadPrice", 3);
+  priceValidate("pentaPrice", 4);
 };
 //Math
 var roundToString = function(input){
@@ -288,15 +296,19 @@ window.onload = function(){
     });
   //Write in default prices
   $("#eyePrice").val(lsRead("eyePrice", defaultPrices[0]));
-  priceValidate("eyePrice", 0);
   $("#twicePrice").val(lsRead("twicePrice", defaultPrices[1]));
-  priceValidate("twicePrice", 1);
   $("#thricePrice").val(lsRead("thricePrice", defaultPrices[2]));
-  priceValidate("thricePrice", 2);
   $("#quadPrice").val(lsRead("quadPrice", defaultPrices[3]));
-  priceValidate("quadPrice", 3);
   $("#pentaPrice").val(lsRead("pentaPrice", defaultPrices[4]));
-  priceValidate("pentaPrice", 4);
+  validAll();
   //Calculate! button
   $("#theButton").click(calculate);
+  $("#btnPriceDefault").click(function(){
+    $("#eyePrice").val(defaultPrices[0]);
+    $("#twicePrice").val(defaultPrices[1]);
+    $("#thricePrice").val(defaultPrices[2]);
+    $("#quadPrice").val(defaultPrices[3]);
+    $("#pentaPrice").val(defaultPrices[4]);
+    validAll();
+  });
 };
