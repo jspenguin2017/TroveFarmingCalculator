@@ -301,7 +301,7 @@ window.onload = function(){
   $("#quadPrice").val(lsRead("quadPrice", defaultPrices[3]));
   $("#pentaPrice").val(lsRead("pentaPrice", defaultPrices[4]));
   validAll();
-  //Calculate! button
+  //Buttons
   $("#theButton").click(calculate);
   $("#btnPriceDefault").click(function(){
     $("#eyePrice").val(defaultPrices[0]);
