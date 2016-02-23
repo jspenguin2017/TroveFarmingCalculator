@@ -81,8 +81,9 @@ var Database = {
   S5: "Penta"
 };
 //On change validation
-var priceValidate = function(id, index){
-  var valueBuffer = parseFloat($("#" + id).val());
+var priceValidate = function(oId, index){
+  var id = "#" + oId;
+  var valueBuffer = parseFloat($(id).val());
   $(id + "Div").removeClass("has-success has-warning has-error");
   $(id + "Icon").removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove")
   if(isNaN(valueBuffer) || !isFinite(valueBuffer) || valueBuffer < 0){
@@ -99,7 +100,7 @@ var priceValidate = function(id, index){
     $(id).val(valueBuffer);
     isValid[index] = true;
     enteredPrices[index] = valueBuffer;
-    lsWrite(id, valueBuffer);
+    lsWrite(oId, valueBuffer);
   }else{
     //Passed all tests
     $(id + "Div").addClass("has-success");
@@ -108,7 +109,7 @@ var priceValidate = function(id, index){
     $(id).val(valueBuffer);
     isValid[index] = true;
     enteredPrices[index] = valueBuffer;
-    lsWrite(id, valueBuffer);
+    lsWrite(oId, valueBuffer);
   }
 };
 //Math
