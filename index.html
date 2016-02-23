@@ -46,9 +46,11 @@
         <p>This tool will tell you what you should do with the Shadow gear that you looted from a dungeon. This tool is not for gears that you plan to wear. </p>
         <p>Shadow Level 5 and higher gears should not be forged before decomposing. Depending on the gear, you might want to sell it in Trade chat. </p>
         <p>It's always up to you to come up with the final decision, don't follow suggestions blindly. Also make sure that you are not getting materials you need for forging at a higher price than whan you entered below. </p>
+        <p>Prices you entered will be saved to your browser if possible, and will be loaded next time to come back. </p>
         <br>
         <!-- Part 1 -->
         <p id="step1"><strong>Step 1: </strong>Enter current prices (optional, but highly recommended)</p>
+        <button type="button" class="btn btn-primary btn-lg" id="btnPriceDefault">Restore default</button>
         <p style="color:#008000;">Green: valid, please move on. </p>
         <p style="color:#B36B00;">Yellow: price is way off the default value, please double check. </p>
         <p style="color:#993333;">Red: invalid, please enter numeric prices. </p>
@@ -150,7 +152,7 @@
         <br>
         <!-- Part 3 -->
         <p><strong>Step 3: </strong></p>
-        <button type="button" class="btn btn-primary" id="theButton">Calculate!</button>
+        <button type="button" class="btn btn-primary btn-lg" id="theButton">Calculate!</button>
         <br><br>
         <div id="outputResultsDiv" style="display:none;">
           <br>
