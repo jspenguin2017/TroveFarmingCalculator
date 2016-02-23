@@ -1,3 +1,7 @@
+v1.3 - 2016.02.23: 
+1. Prices will now be saved to the user's browser, and loaded next time he visits
+2. Updated default prices (will do this when I login)
+
 v1.2.1 - 2016.02.11: 
 1. Validator will now check if the number entered by the user is infinity
 
