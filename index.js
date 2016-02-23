@@ -2,6 +2,31 @@
 var defaultPrices = [4.5, 900, 3900, 12700, 39950];
 var enteredPrices = defaultPrices.slice();
 var isValid = [true, true, true, true, true];
+//Local storage control
+var lsSupport = false;
+if(window.localStorage){
+  lsSupport = true;
+}
+var lsRead = function(id, def){
+  //If not supported, just return default
+  if(!lsSupport){
+    return def;
+  }
+  //Read item and check if it is valid
+  var buffer = parseFloat(localStorage.getItem(id));
+  if(isNaN(buffer) || !isFinite(buffer) || buffer < 0){
+    return def;
+  }
+  return buffer;
+}
+var lsWrite = function(id, val){
+  //Check if supported
+  if(!lsSupport){
+    return;
+  }
+  //Write data
+  localStorage.setItem(id, val);
+}
 //Database
 var Database = {
   //Deconstruction values, thanks to the author of: 
@@ -57,7 +82,7 @@ var Database = {
 };
 //On change validation
 var priceValidate = function(id, index){
-  var valueBuffer = parseFloat($(id).val());
+  var valueBuffer = parseFloat($("#" + id).val());
   $(id + "Div").removeClass("has-success has-warning has-error");
   $(id + "Icon").removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove")
   if(isNaN(valueBuffer) || !isFinite(valueBuffer) || valueBuffer < 0){
@@ -74,6 +99,7 @@ var priceValidate = function(id, index){
     $(id).val(valueBuffer);
     isValid[index] = true;
     enteredPrices[index] = valueBuffer;
+    lsWrite(id, valueBuffer);
   }else{
     //Passed all tests
     $(id + "Div").addClass("has-success");
@@ -82,6 +108,7 @@ var priceValidate = function(id, index){
     $(id).val(valueBuffer);
     isValid[index] = true;
     enteredPrices[index] = valueBuffer;
+    lsWrite(id, valueBuffer);
   }
 };
 //Math
@@ -238,33 +265,37 @@ var calculate = function(){
 };
 //Init
 window.onload = function(){
+  //Draw warning if local storage not supported
+  if(!lsSupport){
+    $("#lsWarningDiv").css("display", "block");
+  }
   //Prices Validation
   $("#eyePrice").change(function(){
-      priceValidate("#eyePrice", 0)
+      priceValidate("eyePrice", 0);
     });
   $("#twicePrice").change(function(){
-      priceValidate("#twicePrice", 1)
+      priceValidate("twicePrice", 1);
     });
   $("#thricePrice").change(function(){
-      priceValidate("#thricePrice", 2)
+      priceValidate("thricePrice", 2);
     });
   $("#quadPrice").change(function(){
-      priceValidate("#quadPrice", 3)
+      priceValidate("quadPrice", 3);
     });
   $("#pentaPrice").change(function(){
-      priceValidate("#pentaPrice", 4)
+      priceValidate("pentaPrice", 4);
     });
   //Write in default prices
-  $("#eyePrice").val(defaultPrices[0]);
-  priceValidate("#eyePrice", 0);
-  $("#twicePrice").val(defaultPrices[1]);
-  priceValidate("#twicePrice", 1);
-  $("#thricePrice").val(defaultPrices[2]);
-  priceValidate("#thricePrice", 2);
-  $("#quadPrice").val(defaultPrices[3]);
-  priceValidate("#quadPrice", 3);
-  $("#pentaPrice").val(defaultPrices[4]);
-  priceValidate("#pentaPrice", 4);
+  $("#eyePrice").val(lsRead("eyePrice", defaultPrices[0]));
+  priceValidate("eyePrice", 0);
+  $("#twicePrice").val(lsRead("twicePrice", defaultPrices[1]));
+  priceValidate("twicePrice", 1);
+  $("#thricePrice").val(lsRead("thricePrice", defaultPrices[2]));
+  priceValidate("thricePrice", 2);
+  $("#quadPrice").val(lsRead("quadPrice", defaultPrices[3]));
+  priceValidate("quadPrice", 3);
+  $("#pentaPrice").val(lsRead("pentaPrice", defaultPrices[4]));
+  priceValidate("pentaPrice", 4);
   //Calculate! button
   $("#theButton").click(calculate);
 };
