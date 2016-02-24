@@ -311,4 +311,7 @@ window.onload = function(){
     $("#pentaPrice").val(defaultPrices[4]);
     validAll();
   });
+  $("#btnJumpToChat").click(function(){
+    $("html, body").animate({scrollTop: $("#disqusContainer").offset().top}, "fast");
+  });
 };
