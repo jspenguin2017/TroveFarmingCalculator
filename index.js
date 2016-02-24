@@ -1,5 +1,5 @@
 //Variables
-var defaultPrices = [4.5, 900, 3900, 12700, 39950];
+var defaultPrices = [5.4, 840, 3800, 12700, 40000];
 var enteredPrices = defaultPrices.slice();
 var isValid = [true, true, true, true, true];
 //Local storage control
