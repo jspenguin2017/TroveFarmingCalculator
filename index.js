@@ -29,10 +29,18 @@ var lsWrite = function(id, val){
 };
 //Database
 var Database = {
+  eyes: 7, //Shadow 1 to 5 all give 7 eyes
+  //New deconstruction values, from Wolfenstian
+  //http://forums.trovegame.com/showthread.php?92550-Anyone-knows-what-are-the-new-loot-values
+  fluxS1: 35,
+  fluxS2: 75,
+  fluxS3: 250,
+  fluxS4: 600,
+  fluxS5: 1000,
+  //Flux: fluxS+#level+#stars
+  /*On 2016.03.01, deconstruction values has changed
   //Deconstruction values, thanks to the author of: 
   //https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=1022828731
-  eyes: 7, //Shadow 1 to 4 all give 7 eyes
-  //Flux: fluxS+#level+#stars
   //Shadow Level 1
   fluxS10: 25,
   fluxS11: 35,
@@ -63,6 +71,7 @@ var Database = {
   fluxS45: 1700,
   //Shadow Level 5 - only need 0 star
   fluxS50: 2000,
+  */
   //Forging costs, thanks to the author of: 
   //https://docs.google.com/spreadsheets/d/1G-9Fg8rGDKFV0zweJlWLKy1JLpbqf7pm6H7BxTX_PUc/edit#gid=0
   forgeS1Flux: 75,
@@ -164,7 +173,7 @@ var calculate = function(){
   $("#outputEyePrice0Gain").html(roundToString(buffer));
   totalFluxGain += buffer;
   //Flux
-  buffer = Database["fluxS" + shadowLevel + starNumber];
+  buffer = Database["fluxS" + shadowLevel /*+ starNumber*/];
   $("#outputFluxQuantity0Gain").html("Flux (" + buffer.toString() + ")");
   $("#outputFluxPrice0Gain").html(roundToString(buffer));
   totalFluxGain += buffer;
@@ -236,7 +245,7 @@ var calculate = function(){
     $("#outputEyePrice" + forgedTime + "Gain").html(roundToString(Database["eyes"] * enteredPrices[0]));
     totalFluxGain += Database["eyes"] * enteredPrices[0];
     //Flux
-    buffer = Database["fluxS" + shadowLevel + starNumber];
+    buffer = Database["fluxS" + shadowLevel /*+ starNumber*/];
      $("#outputFluxQuantity" + forgedTime + "Gain").html("Flux (" + buffer.toString() + ")");
     $("#outputFluxPrice" + forgedTime + "Gain").html(buffer);
     totalFluxGain += buffer;
