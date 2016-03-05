@@ -251,7 +251,7 @@ var drawMathDiv = function(){
         $("<div>").addClass("mathTableDiv").attr("id", "out" + direction + "Div" + i.toString()).append(
           //Draw title
           titleBuffer, 
-          $("<p>").html((ii === 0)? "Costs in forging" : "Gain from deconstructing: "), 
+          $("<p>").html((ii === 0)? "Costs in forging: " : "Gain from deconstructing: "), 
           //Draw table
           $("<table>").addClass("table table-hover").css("max-width", "600px").append(
             $("<thead>").append(
