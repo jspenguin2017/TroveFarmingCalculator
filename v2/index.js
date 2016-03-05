@@ -294,6 +294,8 @@ var calculate = function(){
   //Check if prices are valid
   for(var i = 0; i < priceRows.length; i++){
     if(!priceRows[i].isValid){
+      $("#mathMainDiv").hide();
+      $("#outResultsDiv").hide();
       $("html, body").animate({scrollTop: $("#step1P").offset().top}, "fast");
       return;
     }
