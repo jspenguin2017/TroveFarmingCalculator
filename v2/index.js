@@ -171,7 +171,6 @@ var Forge = function(rarity, star){
     this.rarity += 1;
     this.star = 0;
     //Return: [Eye count, Eye price, Flux count, Others count, Others price]
-    console.log(mat);
     return mat;
   };
 };
