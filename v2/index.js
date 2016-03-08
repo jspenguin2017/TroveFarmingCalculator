@@ -59,7 +59,7 @@ var PriceRow = function(name, def){
   this.updatePrice = function(price){
     this.input.val(price);
     this.enteredPrice = price;
-    lsWrite("Cat_Forger_" + name, price);
+    lsWrite("Cat_Forger_" + this.name.text(), price);
   };
   this.validate = function(){
     var priceBuffer = parseFloat(this.input.val());
