@@ -275,8 +275,8 @@ var drawMathDiv = function(){
                 $("<td>").attr("id", "outSoul" + direction + "Price" + i.toString())
               ), 
               $("<tr>").append(
-                $("<th>").html("<strong>Total " + direction + " in Flux</strong>"), 
-                $("<th>").append(
+                $("<td>").html("<strong>Total " + direction + " in Flux</strong>"), 
+                $("<td>").append(
                   $("<strong>").attr("id", "outTotal" + direction + i.toString())
                 )
               )
