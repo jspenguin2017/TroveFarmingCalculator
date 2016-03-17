@@ -246,7 +246,7 @@ var drawMathDiv = function(){
           $("<td>").attr("id", "outPrevCosts" + i.toString())
         );
       }
-      direction = (ii === 0)? "Costs" : "Gain"
+      direction = (ii === 0)? "Costs" : "Gain";
       div.append(
         $("<div>").addClass("mathTableDiv").attr("id", "out" + direction + "Div" + i.toString()).append(
           //Draw title
