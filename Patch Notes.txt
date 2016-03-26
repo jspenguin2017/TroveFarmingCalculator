@@ -1,3 +1,9 @@
+v2.0 - 2016.03.26: 
+1. Updated UI
+2. These lines needs to be changed to fit Mantle of Power update: 
+   JS: 2, 3, 311
+   HTML: 48, 50
+
 v1.3 - 2016.02.23: 
 1. Prices will now be saved to the user's browser, and loaded next time he visits
 2. Added chat board
