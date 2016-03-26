@@ -1,6 +1,6 @@
 //Initialize variables
-var names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Souls"];
-var prices = [5.4, 840, 3800, 12700, 40000, 2000, 90000]; //Default prices
+var names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame"];//, "Radiant Souls"];
+var prices = [5.4, 840, 3800, 12700, 40000, 2000];//, 90000]; //Default prices
 var colors = {green: "#008000", yellow: "#B36B00", red: "#993333"};
 var priceRows = [];
 var lsSupport = false;
@@ -308,7 +308,7 @@ var calculate = function(){
   var finalMessages = [];
   var profitList = [];
   var data, costs, gain, total, totalBuffer;
-  for(var i = 0; forge.rarity < 6; i++){ //i is forged time
+  for(var i = 0; forge.rarity < 5 /*6*/; i++){ //i is forged time
     //Forge
     if(i !== 0){
       $("#outPrevCosts" + i.toString()).html(roundToString(forge.totalCost));
@@ -316,7 +316,7 @@ var calculate = function(){
       $("#outEyeCostsCount" + i.toString()).html("Eye (" + data[0].toString() + ")");
       $("#outEyeCostsPrice" + i.toString()).html(roundToString(data[1]));
       $("#outFluxCostsCount" + i.toString()).html("Flux (" + data[2].toString() + ")");
-      $("#outFluxCostsPrice" + i.toString()).html(roundToString(data[2]));
+      $("#outFluxCostsPrice" + i.toString()).html(data[2]);
       $("#outSoulCostsType" + i.toString()).html(data[3]);
       $("#outSoulCostsPrice" + i.toString()).html(roundToString(data[4]));
       $("#outTotalCosts" + i.toString()).html(roundToString(forge.totalCost));
