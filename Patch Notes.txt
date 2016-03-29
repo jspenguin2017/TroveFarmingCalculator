@@ -1,3 +1,6 @@
+v2.0.1 - 2016.03.29: 
+1. Fixed a problem that caused wrong forging costs
+
 v2.0 - 2016.03.26: 
 1. Updated UI
 2. Updated default prices
