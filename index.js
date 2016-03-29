@@ -363,6 +363,7 @@ var calculate = function(){
   for(var i = 1; i < profitList.length; i++){
     if(profitList[i] > max){
       indexOfMax = i;
+      max = profitList[i];
     }
   }
   //Show message
