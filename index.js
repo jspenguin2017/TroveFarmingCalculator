@@ -139,7 +139,7 @@ var Forge = function(rarity, star){
     mat.push(priceBuffer);
     //Flux
     mat.push(db("forge", "Flux", this.rarity) * needStar);
-    subTotal += mat[1];
+    subTotal += mat[2];
     //Others
     if(this.rarity === 1){ //500 Flux 50 Eyes
       //Eye
