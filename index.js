@@ -397,9 +397,9 @@ window.onload = function(){
     $("html, body").animate({scrollTop: $("#chatDiv").offset().top}, "fast");
   });
   $("#restoreDefBtn").click(function(){
-    for(var i = 0; i < priceRows.length; i++){
-      priceRows[i].restoreDef();
-    }
+    priceRows.forEach(function(row){
+      row.restoreDef();
+    });
   });
   $("#calcBtn").click(calculate);
 };
