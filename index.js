@@ -178,7 +178,7 @@ var Forge = function(rarity, star){
 var db = function(action, mat, rarity/*, star*/){
   if(action === "decon"){
     if(mat === "Eye"){
-      return 7;
+      return (rarity === 6)? 0 : 7;
     }else if(mat === "Flux"){
       switch(rarity){
         case 1: return 35;
