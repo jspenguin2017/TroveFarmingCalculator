@@ -94,8 +94,8 @@ var PriceRow = function(name, def){
   this.input.val(this.enteredPrice);
   this.validate();
   //Bind events
-  this.input.change({name: this.name.text()}, function(e){
-    priceRows[names.indexOf(e.data.name)].validate();
+  this.input.change({t: this}, function(e){
+    e.data.t.validate();
   });
 };
 getPrice = function(mat){
@@ -111,9 +111,9 @@ var Forge = function(rarity, star){
   this.deconstruct = function(){
     //Get material list
     var mat = [
-      db("decon", "Eye", this.rarity, this.star), 
-      db("decon", "Flux", this.rarity, this.star), 
-      db("decon", "Soul", this.rarity, this.star)
+      db("decon", "Eye", this.rarity/*, this.star*/), 
+      db("decon", "Flux", this.rarity/*, this.star*/), 
+      db("decon", "Soul", this.rarity/*, this.star*/)
     ];
     //Calculate total gain in Flux
     var totalFluxGain = (mat[0] * getPrice("Eye")) + (mat[1]);
@@ -175,7 +175,7 @@ var Forge = function(rarity, star){
   };
 };
 //Database
-var db = function(action, mat, rarity, star){
+var db = function(action, mat, rarity/*, star*/){
   if(action === "decon"){
     if(mat === "Eye"){
       return 7;
