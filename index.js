@@ -1,6 +1,6 @@
 //Initialize variables
 var names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Souls"];
-var prices = [2.7, 650, 3150, 11000, 35000, 2000, 150000]; //Default prices
+var prices = [2.7, 400, 2700, 9500, 33000, 2300, 120000]; //Default prices
 var colors = {green: "#008000", yellow: "#B36B00", red: "#993333"};
 var priceRows = [];
 var lsSupport = false;
