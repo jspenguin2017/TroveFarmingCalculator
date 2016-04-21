@@ -43,6 +43,7 @@ var PriceRow = function(name, def){
   this.isValid = false;
   //Create elements
   this.name = $("<td>").html("<strong>" + name + "</strong>");
+  this.text = name;
   this.input = $("<input type='text'>").addClass("form-control");
   this.icon = $("<span>").addClass("glyphicon form-control-feedback");
   this.inputDiv = $("<div>").addClass("form-group has-feedback").append(this.input, this.icon);
@@ -59,7 +60,7 @@ var PriceRow = function(name, def){
   this.updatePrice = function(price){
     this.input.val(price);
     this.enteredPrice = price;
-    lsWrite("Cat_Forger_" + this.name.text(), price);
+    lsWrite("Cat_Forger_" + this.text, price);
   };
   this.validate = function(){
     var priceBuffer = parseFloat(this.input.val());
