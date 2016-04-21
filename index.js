@@ -51,7 +51,6 @@ var PriceRow = function(name, def){
     //Remove old feedbacks
     this.icon.removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove");
     this.inputDiv.removeClass("has-success has-warning has-error");
-    
     //Draw new feedbacks
     this.icon.addClass(feedbackData[feedback][0]);
     this.inputDiv.addClass(feedbackData[feedback][1]);
