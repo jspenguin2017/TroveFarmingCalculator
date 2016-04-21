@@ -210,8 +210,8 @@ var db = function(action, mat, rarity){
       }
     }else if(mat === "Flux"){
       switch(rarity){
-        case 1: return 75;
-        case 2: return 150;
+        case 1: return 150;
+        case 2: return 200;
         case 3: return 250;
         case 4: return 400;
         case 5: return 500;
