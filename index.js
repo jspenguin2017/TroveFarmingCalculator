@@ -235,17 +235,19 @@ var drawMathDiv = function(){
         continue;
       }
       //Title
-      titleBuffer = "";
       if(i === 0 || ii === 0){
         titleBuffer = $("<p>").append($("<strong>").attr("id", "outText" + i.toString()));
+      }else{
+        titleBuffer = "";
       }
       //Previous costs
-      prevCostsBuffer = "";
       if(i > 1 && ii === 0){
         prevCostsBuffer = $("<tr>").append(
           $("<td>").html("Previous Costs"), 
           $("<td>").attr("id", "outPrevCosts" + i.toString())
         );
+      }else{
+        prevCostsBuffer = "";
       }
       direction = (ii === 0)? "Costs" : "Gain";
       div.append(
