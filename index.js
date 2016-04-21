@@ -112,9 +112,9 @@ var Forge = function(rarity, star){
   this.deconstruct = function(){
     //Get material list
     var mat = [
-      db("decon", "Eye", this.rarity/*, this.star*/), 
-      db("decon", "Flux", this.rarity/*, this.star*/), 
-      db("decon", "Soul", this.rarity/*, this.star*/)
+      db("decon", "Eye", this.rarity), 
+      db("decon", "Flux", this.rarity), 
+      db("decon", "Soul", this.rarity)
     ];
     //Calculate total gain in Flux
     var totalFluxGain = (mat[0] * getPrice("Eye")) + (mat[1]);
@@ -176,7 +176,7 @@ var Forge = function(rarity, star){
   };
 };
 //Database
-var db = function(action, mat, rarity/*, star*/){
+var db = function(action, mat, rarity){
   if(action === "decon"){
     if(mat === "Eye"){
       return (rarity === 6)? 0 : 7;
