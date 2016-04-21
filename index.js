@@ -2,12 +2,12 @@
 var names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Soul"];
 var prices = [3, 400, 2700, 9500, 33000, 2300, 120000]; //Default prices
 var colors = {green: "#008000", yellow: "#B36B00", red: "#993333"};
-var feedbackData = { //Price rows feedback
+var priceRows = [];
+var priceRowFeedback = {
   success: ["glyphicon-ok", "has-success", colors["green"]], 
   warning: ["glyphicon-warning-sign", "has-warning", colors["yellow"]], 
   error: ["glyphicon-remove", "has-error", colors["red"]]
 };
-var priceRows = [];
 var lsSupport = false;
 //Algorithms
 var isPrice = function(price){
@@ -52,9 +52,9 @@ var PriceRow = function(name, def){
     this.icon.removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove");
     this.inputDiv.removeClass("has-success has-warning has-error");
     //Draw new feedbacks
-    this.icon.addClass(feedbackData[feedback][0]);
-    this.inputDiv.addClass(feedbackData[feedback][1]);
-    this.name.css("color", feedbackData[feedback][2]);
+    this.icon.addClass(priceRowFeedback[feedback][0]);
+    this.inputDiv.addClass(priceRowFeedback[feedback][1]);
+    this.name.css("color", priceRowFeedback[feedback][2]);
   };
   this.updatePrice = function(price){
     this.input.val(price);
