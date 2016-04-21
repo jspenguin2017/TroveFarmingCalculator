@@ -2,11 +2,16 @@
 var names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Soul"];
 var prices = [3, 400, 2700, 9500, 33000, 2300, 120000]; //Default prices
 var colors = {green: "#008000", yellow: "#B36B00", red: "#993333"};
+var feedbackData = {
+  success: ["glyphicon-ok", "has-success", colors["green"]], 
+  warning: ["glyphicon-warning-sign", "has-warning", colors["yellow"]], 
+  error: ["glyphicon-remove", "has-error", colors["red"]]
+};
 var priceRows = [];
 var lsSupport = false;
 //Algorithms
 var isPrice = function(price){
-  return !isNaN(price) && isFinite(price) && price > 0;
+  return !isNaN(price) && isFinite(price) && price >= 0;
 };
 var roundToString = function(input){
   return (Math.round(input * 1000) / 1000).toString();
@@ -46,11 +51,7 @@ var PriceRow = function(name, def){
     //Remove old feedbacks
     this.icon.removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove");
     this.inputDiv.removeClass("has-success has-warning has-error");
-    var feedbackData = {
-      success: ["glyphicon-ok", "has-success", colors["green"]], 
-      warning: ["glyphicon-warning-sign", "has-warning", colors["yellow"]], 
-      error: ["glyphicon-remove", "has-error", colors["red"]]
-    }
+    
     //Draw new feedbacks
     this.icon.addClass(feedbackData[feedback][0]);
     this.inputDiv.addClass(feedbackData[feedback][1]);
