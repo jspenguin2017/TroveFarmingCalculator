@@ -95,7 +95,7 @@ var PriceRow = function(name, def){
   this.input.val(this.enteredPrice);
   this.validate();
   //Bind events
-  this.input.change((function(e){
+  this.input.change((function(){
     this.validate();
   }).bind(this));
 };
