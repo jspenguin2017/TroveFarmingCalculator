@@ -95,9 +95,9 @@ var PriceRow = function(name, def){
   this.input.val(this.enteredPrice);
   this.validate();
   //Bind events
-  this.input.change({t: this}, function(e){
-    e.data.t.validate();
-  });
+  this.input.change((function(e){
+    this.validate();
+  }).bind(this));
 };
 getPrice = function(mat){
   return priceRows[names.indexOf(mat)].enteredPrice;
