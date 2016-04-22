@@ -350,7 +350,7 @@ var calculate = function(){
       totalBuffer += ": " + roundToString(total) + " Flux Profit";
     }
     $("#outText" + i.toString()).html(totalBuffer)
-      .css("color", (((total) >= 0)? colors["yellow"] : colors["red"]));
+      .css("color", (total >= 0)? colors["yellow"] : colors["red"]);
     //Final message
     if(i === 0){
       totalBuffer = "Deconstruct Directly, " + roundToString(total) + " Flux";
