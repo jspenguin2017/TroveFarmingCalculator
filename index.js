@@ -4,9 +4,9 @@ var prices = [3, 175, 2000, 8500, 27000, 2300, 100000]; //Default prices
 var colors = {green: "#008000", yellow: "#B36B00", red: "#993333"};
 var priceRows = [];
 var priceRowFeedback = {
-  success: ["glyphicon-ok", "has-success", colors["green"]], 
-  warning: ["glyphicon-warning-sign", "has-warning", colors["yellow"]], 
-  error: ["glyphicon-remove", "has-error", colors["red"]]
+  success: ["glyphicon-ok", "has-success", colors.green], 
+  warning: ["glyphicon-warning-sign", "has-warning", colors.yellow], 
+  error: ["glyphicon-remove", "has-error", colors.red]
 };
 var lsSupport = false;
 //Algorithms
@@ -350,7 +350,7 @@ var calculate = function(){
       totalBuffer += ": " + roundToString(total) + " Flux Profit";
     }
     $("#outText" + i.toString()).html(totalBuffer)
-      .css("color", (total >= 0)? colors["yellow"] : colors["red"]);
+      .css("color", (total >= 0)? colors.yellow : colors.red);
     //Final message
     if(i === 0){
       totalBuffer = "Deconstruct Directly, " + roundToString(total) + " Flux";
@@ -372,7 +372,7 @@ var calculate = function(){
   //Show message
   $("#outProfitP").html("<strong>" + finalMessages[indexOfMax] + "</strong>");
   //Set color of best choice to green
-  $("#outText" + indexOfMax).css("color", colors["green"]);
+  $("#outText" + indexOfMax).css("color", colors.green);
   //Show elements
   $("#outResultsDiv").show();
   $("#mathMainDiv").show();
