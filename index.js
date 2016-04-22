@@ -319,7 +319,7 @@ var calculate = function(){
       $("#outEyeCostsCount" + i.toString()).html("Eye (" + data[0].toString() + ")");
       $("#outEyeCostsPrice" + i.toString()).html(roundToString(data[1]));
       $("#outFluxCostsCount" + i.toString()).html("Flux (" + data[2].toString() + ")");
-      $("#outFluxCostsPrice" + i.toString()).html(data[2]);
+      $("#outFluxCostsPrice" + i.toString()).html(data[2].toString());
       $("#outSoulCostsType" + i.toString()).html(data[3]);
       $("#outSoulCostsPrice" + i.toString()).html(roundToString(data[4]));
       $("#outTotalCosts" + i.toString()).html(roundToString(forge.totalCost));
@@ -333,7 +333,7 @@ var calculate = function(){
     $("#outEyeGainCount" + i.toString()).html("Eye (" + data[0].toString() + ")");
     $("#outEyeGainPrice" + i.toString()).html(roundToString(getPrice("Eye") * data[0]));
     $("#outFluxGainCount" + i.toString()).html("Flux (" + data[1].toString() + ")");
-    $("#outFluxGainPrice" + i.toString()).html(roundToString(data[1]));
+    $("#outFluxGainPrice" + i.toString()).html(data[1].toString());
     $("#outSoulGainType" + i.toString()).html((data[2] === "N/A")? data[2] : data[2] + " (1)");
     $("#outSoulGainPrice" + i.toString()).html((data[2] === "N/A")? 0 : roundToString(getPrice(data[2])));
     $("#outTotalGain" + i.toString()).html(roundToString(gain));
