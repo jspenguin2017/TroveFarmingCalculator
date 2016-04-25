@@ -162,7 +162,7 @@ var Forge = function(rarity, star){
       subTotal += priceBuffer;
       mat.push(priceBuffer);
     }else{ //3 Penta 3 Flames
-      mat.push("Penta (3) and Flame (3)");
+      mat.push(names[4] + " (3) and " + names[5] + " (3)");
       priceBuffer = getPrice(db("decon", "Soul", 5)) * 3 + getPrice(names[5]) * 3;
       subTotal += priceBuffer;
       mat.push(priceBuffer);
