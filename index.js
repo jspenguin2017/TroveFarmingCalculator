@@ -35,7 +35,7 @@ var lsRead = function(id, def){
       localStorage.setItem(id, val);
     }
   };
-//Price row object
+//Price row constructor
 var PriceRow = function(name, def){
   //Initialize variables
   this.defPrice = def;
@@ -47,43 +47,6 @@ var PriceRow = function(name, def){
   this.input = $("<input type='text'>").addClass("form-control");
   this.icon = $("<span>").addClass("glyphicon form-control-feedback");
   this.inputDiv = $("<div>").addClass("form-group has-feedback").append(this.input, this.icon);
-  //Functions
-  this.drawFeedback = function(feedback){
-    //Remove old feedbacks
-    this.icon.removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove");
-    this.inputDiv.removeClass("has-success has-warning has-error");
-    //Draw new feedbacks
-    this.icon.addClass(priceRowFeedback[feedback][0]);
-    this.inputDiv.addClass(priceRowFeedback[feedback][1]);
-    this.name.css("color", priceRowFeedback[feedback][2]);
-  };
-  this.updatePrice = function(price){
-    this.input.val(price);
-    this.enteredPrice = price;
-    lsWrite("Cat_Forger_" + this.text, price);
-  };
-  this.validate = function(){
-    var priceBuffer = parseFloat(this.input.val());
-    if(!isPrice(priceBuffer)){
-      //Invalid data
-      this.isValid = false;
-      this.drawFeedback("error");
-    }else if(priceBuffer < (this.defPrice / 2) || priceBuffer > (this.defPrice * 2)){
-      //Valid but off from default
-      this.isValid = true;
-      this.drawFeedback("warning");
-      this.updatePrice(priceBuffer);
-    }else{
-      //Valid
-      this.isValid = true;
-      this.drawFeedback("success");
-      this.updatePrice(priceBuffer);
-    }
-  };
-  this.restoreDef = function(){
-    this.input.val(this.defPrice);
-    this.validate();
-  };
   //Draw table row and put in data
   $("#priceTbody").append(
     $("<tr>").append(
@@ -99,81 +62,119 @@ var PriceRow = function(name, def){
     this.validate();
   }).bind(this));
 };
+//Price row prototype
+PriceRow.prototype.drawFeedback = function(feedback){
+  //Remove old feedbacks
+  this.icon.removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove");
+  this.inputDiv.removeClass("has-success has-warning has-error");
+  //Draw new feedbacks
+  this.icon.addClass(priceRowFeedback[feedback][0]);
+  this.inputDiv.addClass(priceRowFeedback[feedback][1]);
+  this.name.css("color", priceRowFeedback[feedback][2]);
+};
+PriceRow.prototype.updatePrice = function(price){
+  this.input.val(price);
+  this.enteredPrice = price;
+  lsWrite("Cat_Forger_" + this.text, price);
+};
+PriceRow.prototype.validate = function(){
+  var priceBuffer = parseFloat(this.input.val());
+  if(!isPrice(priceBuffer)){
+    //Invalid data
+    this.isValid = false;
+    this.drawFeedback("error");
+  }else if(priceBuffer < (this.defPrice / 2) || priceBuffer > (this.defPrice * 2)){
+    //Valid but off from default
+    this.isValid = true;
+    this.drawFeedback("warning");
+    this.updatePrice(priceBuffer);
+  }else{
+    //Valid
+    this.isValid = true;
+    this.drawFeedback("success");
+    this.updatePrice(priceBuffer);
+  }
+};
+PriceRow.prototype.restoreDef = function(){
+  this.input.val(this.defPrice);
+  this.validate();
+};
 getPrice = function(mat){
   return priceRows[names.indexOf(mat)].enteredPrice;
 }
-//Forge object
+//Forge constructor
 var Forge = function(rarity, star){
   //Initialize variables
   this.rarity = rarity;
   this.star = star;
   this.totalCost = 0;
-  //Return mat from deconstructing now
-  this.deconstruct = function(){
-    //Get material list
-    var mat = [
-      db("decon", "Eye", this.rarity), 
-      db("decon", "Flux", this.rarity), 
-      db("decon", "Soul", this.rarity)
-    ];
-    //Calculate total gain in Flux
-    var totalFluxGain = (mat[0] * getPrice("Eye")) + (mat[1]);
-    //Add Soul price
-    if(mat[2] !== "N/A"){
-      totalFluxGain += getPrice(mat[2]);
-    }
-    mat.push(totalFluxGain);
-    //Return: [Eye count, Flux count, Soul name, total value in Flux]
-    return mat;
-  };
-  //Forge to next level
-  this.forge = function(){
-    //Initialize variables
-    var needStar = 5 - this.star;
-    var subTotal = 0;
-    var priceBuffer;
-    var mat = [];
-    //Eyes
-    mat.push(db("forge", "Eye", this.rarity) * needStar);
-    priceBuffer = getPrice("Eye") * mat[0];
+};
+//Forge prototype
+//Return mat from deconstructing now
+Forge.prototype.deconstruct = function(){
+  //Get material list
+  var mat = [
+    db("decon", "Eye", this.rarity), 
+    db("decon", "Flux", this.rarity), 
+    db("decon", "Soul", this.rarity)
+  ];
+  //Calculate total gain in Flux
+  var totalFluxGain = (mat[0] * getPrice("Eye")) + (mat[1]);
+  //Add Soul price
+  if(mat[2] !== "N/A"){
+    totalFluxGain += getPrice(mat[2]);
+  }
+  mat.push(totalFluxGain);
+  //Return: [Eye count, Flux count, Soul name, total value in Flux]
+  return mat;
+};
+//Forge to next level
+Forge.prototype.forge = function(){
+  //Initialize variables
+  var needStar = 5 - this.star;
+  var subTotal = 0;
+  var priceBuffer;
+  var mat = [];
+  //Eyes
+  mat.push(db("forge", "Eye", this.rarity) * needStar);
+  priceBuffer = getPrice("Eye") * mat[0];
+  subTotal += priceBuffer;
+  mat.push(priceBuffer);
+  //Flux
+  mat.push(db("forge", "Flux", this.rarity) * needStar);
+  subTotal += mat[2];
+  //Others
+  if(this.rarity === 1){ //500 Flux 50 Eyes
+    //Eye
+    mat[0] += 50;
+    priceBuffer = getPrice("Eye") * 50;
+    subTotal += priceBuffer;
+    mat[1] += priceBuffer;
+    //Flux
+    mat[2] += 500;
+    subTotal += 500;
+    //Others
+    mat.push("N/A");
+    mat.push(0);
+  }else if(this.rarity !== 5){ //2 Souls
+    //Soul type needed is the same: Shadow Level 2 decompose to 1 Twice and need 2 Twice to forge it to next tier
+    mat.push(db("decon", "Soul", this.rarity));
+    priceBuffer = getPrice(mat[3]) * 2;
+    mat[3] += " (2)";
     subTotal += priceBuffer;
     mat.push(priceBuffer);
-    //Flux
-    mat.push(db("forge", "Flux", this.rarity) * needStar);
-    subTotal += mat[2];
-    //Others
-    if(this.rarity === 1){ //500 Flux 50 Eyes
-      //Eye
-      mat[0] += 50;
-      priceBuffer = getPrice("Eye") * 50;
-      subTotal += priceBuffer;
-      mat[1] += priceBuffer;
-      //Flux
-      mat[2] += 500;
-      subTotal += 500;
-      //Others
-      mat.push("N/A");
-      mat.push(0);
-    }else if(this.rarity !== 5){ //2 Souls
-      //Soul type needed is the same: Shadow Level 2 decompose to 1 Twice and need 2 Twice to forge it to next tier
-      mat.push(db("decon", "Soul", this.rarity));
-      priceBuffer = getPrice(mat[3]) * 2;
-      mat[3] += " (2)";
-      subTotal += priceBuffer;
-      mat.push(priceBuffer);
-    }else{ //3 Penta 3 Flames
-      mat.push(names[4] + " (3) and " + names[5] + " (3)");
-      priceBuffer = getPrice(db("decon", "Soul", 5)) * 3 + getPrice(names[5]) * 3;
-      subTotal += priceBuffer;
-      mat.push(priceBuffer);
-    }
-    //Update variables
-    this.totalCost += subTotal;
-    this.rarity += 1;
-    this.star = 0;
-    //Return: [Eye count, Eye price, Flux count, Others count, Others price]
-    return mat;
-  };
+  }else{ //3 Penta 3 Flames
+    mat.push(names[4] + " (3) and " + names[5] + " (3)");
+    priceBuffer = getPrice(db("decon", "Soul", 5)) * 3 + getPrice(names[5]) * 3;
+    subTotal += priceBuffer;
+    mat.push(priceBuffer);
+  }
+  //Update variables
+  this.totalCost += subTotal;
+  this.rarity += 1;
+  this.star = 0;
+  //Return: [Eye count, Eye price, Flux count, Others count, Others price]
+  return mat;
 };
 //Database
 var db = function(action, mat, rarity){
