@@ -1,3 +1,6 @@
+v2.2.2 - 2016.07.17: 
+1. Updated default prices
+
 v2.2.1 - 2016.06.26: 
 1. Updated default prices
 
