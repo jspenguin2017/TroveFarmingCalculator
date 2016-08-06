@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Constants and variables
+ * Constants and variables. 
  */
 const names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Soul"],
       prices = [1.7, 25, 500, 3500, 12500, 2000, 32000], //Default prices
@@ -15,7 +15,8 @@ let priceRows = [];
 let lsSupport = false;
 
 /**
- * Check if an input is a valid price
+ * Check if an input is a valid price. 
+ * @function
  * @param {*} input - The input to be checked. 
  * @return {boolean} True if the input is valid, false otherwise. 
  */
@@ -23,7 +24,8 @@ const isPrice = function (input) {
     return !isNaN(input) && isFinite(input) && input >= 0;
 };
 /**
- * Round a number to 3 digits after the decimal place
+ * Round a number to 3 digits after the decimal place. 
+ * @function
  * @param {number} input - The number to be rounded. 
  * @return {string} The string representing the rounded input number. 
  */
@@ -32,7 +34,8 @@ const roundToString = function (input) {
 };
 
 /**
- * Safely read price from Local Storage
+ * Safely read price from Local Storage. 
+ * @function
  * @param {string} id - The name of the Local Storage item to retrieve. 
  * @param {number} def - The default price to return if the item cannot be retrieved. 
  * @return {number} A valid price from Local Storage or the default price. 
@@ -53,7 +56,8 @@ const lsRead = function (id, def) {
     }
 };
 /**
- * Safely write price to Local Storage
+ * Safely write price to Local Storage. 
+ * @function
  * @param {string} id - The name of the Local Storage item to write to. 
  * @param {number} val - The price value to write. 
  * @return {boolean} True if the operation was successful, false otherwise. 
@@ -66,13 +70,20 @@ const lsWrite = function (id, val) {
         return false;
     }
 };
-//Price row constructor
+
+/**
+ * Price row constructor. 
+ * All instance variables should only be changed by instance methods. 
+ * @constructor
+ * @param {string} name - The name of the row. 
+ * @param {number} def - The default price. 
+ */
 const PriceRow = function (name, def) {
     //Initialize variables
     this.defPrice = def;
     this.enteredPrice = lsRead(name, def);
     this.isValid = false;
-    //Create elements
+    //Initialize elements
     this.name = $("<td>").html("<strong>" + name + "</strong>");
     this.text = name;
     this.input = $("<input type='text'>").addClass("form-control");
@@ -91,7 +102,13 @@ const PriceRow = function (name, def) {
     //Bind events
     this.input.change(this.validate.bind(this));
 };
-//Price row prototype
+/**
+ * Update feedback state of the price row. 
+ * This method should only be called by @see PriceRow#updatePrice . 
+ * @private
+ * @method
+ * @param {string} feedback - A valid feedback state from @see priceRowFeedback . 
+ */
 PriceRow.prototype.drawFeedback = function (feedback) {
     //Remove old feedbacks
     this.icon.removeClass("glyphicon-ok glyphicon-warning-sign glyphicon-remove");
@@ -101,11 +118,26 @@ PriceRow.prototype.drawFeedback = function (feedback) {
     this.inputDiv.addClass(priceRowFeedback[feedback][1]);
     this.name.css("color", priceRowFeedback[feedback][2]);
 };
+/**
+ * Update price of the price row, then save the price to Local Storage. 
+ * This method will assume input is a valid price. 
+ * This method should only be called by @see PriceRow#updatePrice . 
+ * @private
+ * @method
+ * @param {number} price - The new price to set. 
+ */
 PriceRow.prototype.updatePrice = function (price) {
     this.input.val(price);
     this.enteredPrice = price;
     lsWrite(this.text, price);
 };
+/**
+ * Validate a price from user input. 
+ * This method will read input from input form. 
+ * The input from the user will be checked, then @see PriceRow#drawFeedback and @see PriceRow#updatePrice will be called to update the price row. 
+ * @method
+ * @listens this.input.change
+ */
 PriceRow.prototype.validate = function () {
     const priceBuffer = parseFloat(this.input.val());
     if (!isPrice(priceBuffer)) {
@@ -128,6 +160,7 @@ PriceRow.prototype.restoreDef = function () {
     this.input.val(this.defPrice);
     this.validate();
 };
+
 const getPrice = function (mat) {
     return priceRows[names.indexOf(mat)].enteredPrice;
 }
