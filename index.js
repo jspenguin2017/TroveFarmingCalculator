@@ -1,6 +1,8 @@
 "use strict";
 
-//Initialize variables
+/**
+ * Constants and variables
+ */
 const names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Soul"],
       prices = [1.7, 25, 500, 3500, 12500, 2000, 32000], //Default prices
       colors = { green: "#008000", yellow: "#B36B00", red: "#993333" };
@@ -11,37 +13,64 @@ const priceRowFeedback = {
 };
 let priceRows = [];
 let lsSupport = false;
-//Algorithms
-const isPrice = function (price) {
-    return !isNaN(price) && isFinite(price) && price >= 0;
+
+/**
+ * Check if an input is a valid price
+ * @param {*} input - The input to be checked. 
+ * @return {boolean} True if the input is valid, false otherwise. 
+ */
+const isPrice = function (input) {
+    return !isNaN(input) && isFinite(input) && input >= 0;
 };
+/**
+ * Round a number to 3 digits after the decimal place
+ * @param {number} input - The number to be rounded. 
+ * @return {string} The string representing the rounded input number. 
+ */
 const roundToString = function (input) {
     return (Math.round(input * 1000) / 1000).toString();
 };
-//Local storage control
+
+/**
+ * Safely read price from Local Storage
+ * @param {string} id - The name of the Local Storage item to retrieve. 
+ * @param {number} def - The default price to return if the item cannot be retrieved. 
+ * @return {number} A valid price from Local Storage or the default price. 
+ */
 const lsRead = function (id, def) {
-    //If not supported, just return default
-    if (!lsSupport) {
-        return def;
-    }
-    //Read item and check if it is valid
-    const price = parseFloat(localStorage.getItem(id));
-    if (!isPrice(price)) {
-        return def;
+    if (lsSupport) {
+        //Read data from Local Storage
+        const price = parseFloat(localStorage.getItem("Cat_Forger_" + id));
+        //Check if the data read is a valid price
+        if (!isPrice(price)) {
+            return def;
+        } else {
+            return price;
+        }
     } else {
-        return price;
+        //Local Storage not supported, return the default value
+        return def;
     }
 };
+/**
+ * Safely write price to Local Storage
+ * @param {string} id - The name of the Local Storage item to write to. 
+ * @param {number} val - The price value to write. 
+ * @return {boolean} True if the operation was successful, false otherwise. 
+ */
 const lsWrite = function (id, val) {
     if (lsSupport) {
-        localStorage.setItem(id, val);
+        localStorage.setItem("Cat_Forger_" + id, val);
+        return true;
+    } else {
+        return false;
     }
 };
 //Price row constructor
 const PriceRow = function (name, def) {
     //Initialize variables
     this.defPrice = def;
-    this.enteredPrice = lsRead("Cat_Forger_" + name, def);
+    this.enteredPrice = lsRead(name, def);
     this.isValid = false;
     //Create elements
     this.name = $("<td>").html("<strong>" + name + "</strong>");
@@ -75,7 +104,7 @@ PriceRow.prototype.drawFeedback = function (feedback) {
 PriceRow.prototype.updatePrice = function (price) {
     this.input.val(price);
     this.enteredPrice = price;
-    lsWrite("Cat_Forger_" + this.text, price);
+    lsWrite(this.text, price);
 };
 PriceRow.prototype.validate = function () {
     const priceBuffer = parseFloat(this.input.val());
