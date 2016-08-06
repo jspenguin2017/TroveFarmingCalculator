@@ -1,17 +1,41 @@
 "use strict";
 
 /**
- * Constants and variables. 
+ * The names of forging materials. 
+ * Parallel array with {@link prices}. 
+ * @const {Array.<string>}
  */
-const names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Soul"],
-      prices = [1.7, 25, 500, 3500, 12500, 2000, 32000], //Default prices
-      colors = { green: "#008000", yellow: "#B36B00", red: "#993333" };
+const names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Soul"];
+/**
+ * The default prices of forging materials. 
+ * Parallel array with {@link names}. 
+ * @const {Array.<number>}
+ */
+const prices = [1.7, 25, 500, 3500, 12500, 2000, 32000];
+/**
+ * Defines hexadecimal values of color string. 
+ * @const {Object.<string, string>}
+ */
+const colors = { green: "#008000", yellow: "#B36B00", red: "#993333" };
+/**
+ * Feedback data used in {@link PriceRow#drawFeedback}. 
+ * Contains glyphicon class, Bootstrap form class, and color string. 
+ * @const {Object.<string, Array.<string>>}
+ */
 const priceRowFeedback = {
     success: ["glyphicon-ok", "has-success", colors.green],
     warning: ["glyphicon-warning-sign", "has-warning", colors.yellow],
     error: ["glyphicon-remove", "has-error", colors.red]
 };
+/**
+ * Price row array, order follows {@link names}. 
+ * @var {Array.<PriceRow>}
+ */
 let priceRows = [];
+/**
+ * Whether or not LocalStorage is supported, will be tested and set when the document gets ready. 
+ * @var {boolean}
+ */
 let lsSupport = false;
 
 /**
@@ -34,15 +58,15 @@ const roundToString = function (input) {
 };
 
 /**
- * Safely read price from Local Storage. 
+ * Safely read price from LocalStorage. 
  * @function
- * @param {string} id - The name of the Local Storage item to retrieve. 
+ * @param {string} id - The name of the LocalStorage item to retrieve. 
  * @param {number} def - The default price to return if the item cannot be retrieved. 
- * @return {number} A valid price from Local Storage or the default price. 
+ * @return {number} A valid price from LocalStorage or the default price. 
  */
 const lsRead = function (id, def) {
     if (lsSupport) {
-        //Read data from Local Storage
+        //Read data from LocalStorage
         const price = parseFloat(localStorage.getItem("Cat_Forger_" + id));
         //Check if the data read is a valid price
         if (!isPrice(price)) {
@@ -51,14 +75,14 @@ const lsRead = function (id, def) {
             return price;
         }
     } else {
-        //Local Storage not supported, return the default value
+        //LocalStorage not supported, return the default value
         return def;
     }
 };
 /**
- * Safely write price to Local Storage. 
+ * Safely write price to LocalStorage. 
  * @function
- * @param {string} id - The name of the Local Storage item to write to. 
+ * @param {string} id - The name of the LocalStorage item to write to. 
  * @param {number} val - The price value to write. 
  * @return {boolean} True if the operation was successful, false otherwise. 
  */
@@ -73,22 +97,65 @@ const lsWrite = function (id, val) {
 
 /**
  * Price row constructor. 
- * All instance variables should only be changed by instance methods. 
  * @constructor
  * @param {string} name - The name of the row. 
  * @param {number} def - The default price. 
  */
 const PriceRow = function (name, def) {
-    //Initialize variables
+    /**
+     * The default price of current material. 
+     * This is a contant and should only be set by the constructor. 
+     * @private
+     * @member {number}
+     */
     this.defPrice = def;
+    /**
+     * The price entered by the user. 
+     * When the instance is constructed, price saved in LocalStorage will be retrieved. 
+     * This variable should only be changed by {@link PriceRow#updatePrice}. 
+     * @member {number}
+     */
     this.enteredPrice = lsRead(name, def);
+    /**
+     * Whether or not {@link PriceRow#enteredPrice} is valid. 
+     * This variable should only be changed by {@link PriceRow#validate}. 
+     * @member {boolean}
+     */
     this.isValid = false;
-    //Initialize elements
-    this.name = $("<td>").html("<strong>" + name + "</strong>");
+    /**
+     * The name of the material. 
+     * This is a contant and should only be set by the constructor. 
+     * @private
+     * @member {string}
+     */
     this.text = name;
+    /**
+     * The jQueryDOM object of name of the material. 
+     * This object should only be updated by {PriceRow#drawFeedback}. 
+     * @private
+     * @member {Object.<jQueryDOM>}
+     */
+    this.name = $("<td>").html("<strong>" + name + "</strong>");
+    /**
+     * The jQueryDOM object of the price input box. 
+     * @member {Object.<jQueryDOM>}
+     */
     this.input = $("<input type='text'>").addClass("form-control");
+    /**
+     * The jQueryDOM object of the icon on the right end of the input box. 
+     * This object should only be updated by {PriceRow#drawFeedback}. 
+     * @private
+     * @member {Object.<jQueryDOM>}
+     */
     this.icon = $("<span>").addClass("glyphicon form-control-feedback");
+    /**
+     * The jQueryDOM object of the div containing {@link PriceRow#input} and {@link PriceRow#icon}.  
+     * This object should only be updated by {PriceRow#drawFeedback}. 
+     * @private
+     * @member {Object.<jQueryDOM>}
+     */
     this.inputDiv = $("<div>").addClass("form-group has-feedback").append(this.input, this.icon);
+    //=====Initialization=====
     //Draw table row and put in data
     $("#priceTbody").append(
       $("<tr>").append(
@@ -104,10 +171,10 @@ const PriceRow = function (name, def) {
 };
 /**
  * Update feedback state of the price row. 
- * This method should only be called by @see PriceRow#updatePrice . 
+ * This method should only be called by {@link PriceRow#updatePrice}. 
  * @private
  * @method
- * @param {string} feedback - A valid feedback state from @see priceRowFeedback . 
+ * @param {string} feedback - A valid feedback state from {@link priceRowFeedback}. 
  */
 PriceRow.prototype.drawFeedback = function (feedback) {
     //Remove old feedbacks
@@ -119,9 +186,9 @@ PriceRow.prototype.drawFeedback = function (feedback) {
     this.name.css("color", priceRowFeedback[feedback][2]);
 };
 /**
- * Update price of the price row, then save the price to Local Storage. 
- * This method will assume input is a valid price. 
- * This method should only be called by @see PriceRow#updatePrice . 
+ * Update price of the price row, then save the price to LocalStorage. 
+ * This method will assume parameter passed in is a valid price. 
+ * This method should only be called by {@link PriceRow#updatePrice}. 
  * @private
  * @method
  * @param {number} price - The new price to set. 
@@ -134,7 +201,8 @@ PriceRow.prototype.updatePrice = function (price) {
 /**
  * Validate a price from user input. 
  * This method will read input from input form. 
- * The input from the user will be checked, then @see PriceRow#drawFeedback and @see PriceRow#updatePrice will be called to update the price row. 
+ * The input from the user will be checked, then {@link PriceRow#drawFeedback} and {@link PriceRow#updatePrice} will be called to update the price row. 
+ * Feedback state (see {@link priceRowFeedback} for more information) will be set to warning if the entered price is below half or above double of the default price. 
  * @method
  * @listens this.input.change
  */
@@ -156,23 +224,54 @@ PriceRow.prototype.validate = function () {
         this.updatePrice(priceBuffer);
     }
 };
+/**
+ * Restore the default price. 
+ * @method
+ */
 PriceRow.prototype.restoreDef = function () {
     this.input.val(this.defPrice);
     this.validate();
 };
 
+/**
+ * Read the entered price of a material from {@link PriceRow#enteredPrice}. 
+ * This function will not check whether or not {@link PriceRow#isValid} is true. 
+ * @function
+ * @param {string} mat - The name of a material in {@link names}. 
+ * @return {number} The entered price of the material. 
+ */
 const getPrice = function (mat) {
     return priceRows[names.indexOf(mat)].enteredPrice;
 }
-//Forge constructor
+
+/**
+ * Forge constructor. 
+ * @constructor
+ * @param {number} rarity - The Shadow Level of the gear, 6 for Radiant. 
+ * @param {number} star - The star count of the gear. 
+ */
 const Forge = function (rarity, star) {
-    //Initialize variables
+    /**
+     * The current Shadow Level of the gear, 6 for Radiant. 
+     * @member {number}
+     */
     this.rarity = rarity;
+    /**
+     * The current star count of the gear. 
+     * @member {number}
+     */
     this.star = star;
+    /**
+     * The total cost in Flux so far. 
+     * @member {number}
+     */
     this.totalCost = 0;
 };
-//Forge prototype
-//Return mat from deconstructing now
+/**
+ * Return the materials gain from loot collecting the gear at current state. 
+ * @method
+ * @return {Array.<*>} An array containing : [Eye count, Flux count, Soul name, total value in Flux]. 
+ */
 Forge.prototype.deconstruct = function () {
     //Get material list
     const mat = [
@@ -187,10 +286,13 @@ Forge.prototype.deconstruct = function () {
         totalFluxGain += getPrice(mat[2]);
     }
     mat.push(totalFluxGain);
-    //Return: [Eye count, Flux count, Soul name, total value in Flux]
     return mat;
 };
-//Forge to next level
+/**
+ * Update {@link Forge#totalCost} then return the materials costs from forging to the next Shadow Level (or Radiant). 
+ * @method
+ * @return {Array.<*>} An array containing: [Eye count, Eye price, Flux count, Others count, Others price]. 
+ */
 Forge.prototype.forge = function () {
     //Initialize variables
     let needStar = 5 - this.star,
@@ -206,7 +308,7 @@ Forge.prototype.forge = function () {
     mat.push(db("forge", "Flux", this.rarity) * needStar);
     subTotal += mat[2];
     //Others
-    if (this.rarity === 1) { //500 Flux 50 Eyes
+    if (this.rarity === 1) { //Shadow Level 1: 500 Flux 50 Eyes
         //Eye
         mat[0] += 50;
         priceBuffer = getPrice("Eye") * 50;
@@ -218,14 +320,14 @@ Forge.prototype.forge = function () {
         //Others
         mat.push("N/A");
         mat.push(0);
-    } else if (this.rarity !== 5) { //2 Souls
+    } else if (this.rarity !== 5) { //Shadow Level 2~4: 2 Souls
         //Soul type needed is the same: Shadow Level 2 decompose to 1 Twice and need 2 Twice to forge it to next tier
         mat.push(db("decon", "Soul", this.rarity));
         priceBuffer = getPrice(mat[3]) * 2;
         mat[3] += " (2)";
         subTotal += priceBuffer;
         mat.push(priceBuffer);
-    } else { //3 Penta 3 Flames
+    } else { //Shadow Level 5: 3 Penta 3 Flames
         mat.push(names[4] + " (3) and " + names[5] + " (3)");
         priceBuffer = getPrice(db("decon", "Soul", 5)) * 3 + getPrice(names[5]) * 3;
         subTotal += priceBuffer;
@@ -235,10 +337,17 @@ Forge.prototype.forge = function () {
     this.totalCost += subTotal;
     this.rarity += 1;
     this.star = 0;
-    //Return: [Eye count, Eye price, Flux count, Others count, Others price]
     return mat;
 };
-//Database
+
+/**
+ * Costs and gain database. 
+ * @function
+ * @param {string} action - The current action, "decon" for loot collecting and "forge" for forging. 
+ * @param {string} mat - The material to look up, can be "Eye", "Flux", or "Soul". 
+ * @param {number} rarity - The current Shadow Level of the gear, 6 for Radiant. 
+ * @return {int} The number of material of the context. 
+ */
 const db = function (action, mat, rarity) {
     if (action === "decon") {
         if (mat === "Eye") {
@@ -250,7 +359,7 @@ const db = function (action, mat, rarity) {
                 case 3: return 250;
                 case 4: return 600;
                 case 5: return 1000;
-                case 6: return 1200; //Radiant
+                case 6: return 1200;
             }
         } else if (mat === "Soul") {
             switch (rarity) {
@@ -282,7 +391,11 @@ const db = function (action, mat, rarity) {
         }
     }
 };
-//Draw math div
+
+/**
+ * Initialize the math div. 
+ * @function
+ */
 const drawMathDiv = function () {
     let direction, prevCostsBuffer, titleBuffer;
     for (let i = 0; i < 7; i++) {
@@ -354,7 +467,11 @@ const drawMathDiv = function () {
     //Hide math div
     $("#mathMainDiv").hide();
 };
-//Calculate
+/**
+ * Calculate costs and gain. 
+ * @function
+ * @listens $("#calcBtn").click
+ */
 const calculate = function () {
     //Check if prices are valid
     for (let i = 0; i < priceRows.length; i++) {
@@ -439,7 +556,12 @@ const calculate = function () {
     $("#mathMainDiv").show();
     $("html, body").animate({ scrollTop: $("#step2P").offset().top }, "fast");
 };
-//Initialization
+
+/**
+ * When the document is ready, initialize the page. 
+ * @function
+ * @listens $(document).ready
+ */
 $(document).ready(function () {
     //Local storage
     if (window.localStorage) {
