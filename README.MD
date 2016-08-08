@@ -4,6 +4,10 @@ https://x01x012013.github.io/Trove/
 
 # Patch Notes
 
+v2.4 - 2016.08.08: 
+
+1. Added comma separator in numbers
+
 v2.3 - 2016.08.05: 
 
 1. Updated jQuery to 3.1.0 and Bootstrap to 3.3.7

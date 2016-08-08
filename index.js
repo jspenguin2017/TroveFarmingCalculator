@@ -268,30 +268,9 @@ const Forge = function (rarity, star) {
     this.totalCost = 0;
 };
 /**
- * Return the materials gain from loot collecting the gear at current state. 
- * @method
- * @return {Array.<*>} An array containing : [Eye count, Flux count, Soul name, total value in Flux]. 
- */
-Forge.prototype.deconstruct = function () {
-    //Get material list
-    const mat = [
-      db("decon", "Eye", this.rarity),
-      db("decon", "Flux", this.rarity),
-      db("decon", "Soul", this.rarity)
-    ];
-    //Calculate total gain in Flux
-    let totalFluxGain = (mat[0] * getPrice("Eye")) + (mat[1]);
-    //Add Soul price
-    if (mat[2] !== "N/A") {
-        totalFluxGain += getPrice(mat[2]);
-    }
-    mat.push(totalFluxGain);
-    return mat;
-};
-/**
  * Update {@link Forge#totalCost} then return the materials costs from forging to the next Shadow Level (or Radiant). 
  * @method
- * @return {Array.<*>} An array containing: [Eye count, Eye price, Flux count, Others count, Others price]. 
+ * @return {Array.<*>} An array containing: [Eye count, Eye price, Flux count, Others name and count, Others price]. 
  */
 Forge.prototype.forge = function () {
     //Initialize variables
@@ -337,6 +316,27 @@ Forge.prototype.forge = function () {
     this.totalCost += subTotal;
     this.rarity += 1;
     this.star = 0;
+    return mat;
+};
+/**
+ * Return the materials gain from loot collecting the gear at current state. 
+ * @method
+ * @return {Array.<*>} An array containing : [Eye count, Flux count, Soul name, total value in Flux]. 
+ */
+Forge.prototype.deconstruct = function () {
+    //Get material list
+    const mat = [
+      db("decon", "Eye", this.rarity),
+      db("decon", "Flux", this.rarity),
+      db("decon", "Soul", this.rarity)
+    ];
+    //Calculate total gain in Flux
+    let totalFluxGain = (mat[0] * getPrice("Eye")) + (mat[1]);
+    //Add Soul price
+    if (mat[2] !== "N/A") {
+        totalFluxGain += getPrice(mat[2]);
+    }
+    mat.push(totalFluxGain);
     return mat;
 };
 
@@ -494,10 +494,10 @@ const calculate = function () {
         if (i !== 0) {
             $("#outPrevCosts" + i.toString()).html(roundToString(forge.totalCost));
             data = forge.forge();
-            $("#outEyeCostsCount" + i.toString()).html("Eye (" + data[0].toString() + ")");
+            $("#outEyeCostsCount" + i.toString()).html("Eye (" + roundToString(data[0]) + ")");
             $("#outEyeCostsPrice" + i.toString()).html(roundToString(data[1]));
-            $("#outFluxCostsCount" + i.toString()).html("Flux (" + data[2].toString() + ")");
-            $("#outFluxCostsPrice" + i.toString()).html(data[2].toString());
+            $("#outFluxCostsCount" + i.toString()).html("Flux (" +roundToString(data[2]) + ")");
+            $("#outFluxCostsPrice" + i.toString()).html(roundToString(data[2]));
             $("#outSoulCostsType" + i.toString()).html(data[3]);
             $("#outSoulCostsPrice" + i.toString()).html(roundToString(data[4]));
             $("#outTotalCosts" + i.toString()).html(roundToString(forge.totalCost));
@@ -508,10 +508,10 @@ const calculate = function () {
         //Deconstruct
         data = forge.deconstruct();
         gain = data[3];
-        $("#outEyeGainCount" + i.toString()).html("Eye (" + data[0].toString() + ")");
+        $("#outEyeGainCount" + i.toString()).html("Eye (" + roundToString(data[0]) + ")");
         $("#outEyeGainPrice" + i.toString()).html(roundToString(getPrice("Eye") * data[0]));
-        $("#outFluxGainCount" + i.toString()).html("Flux (" + data[1].toString() + ")");
-        $("#outFluxGainPrice" + i.toString()).html(data[1].toString());
+        $("#outFluxGainCount" + i.toString()).html("Flux (" + roundToString(data[1]) + ")");
+        $("#outFluxGainPrice" + i.toString()).html(roundToString(data[1]));
         $("#outSoulGainType" + i.toString()).html((data[2] === "N/A") ? data[2] : data[2] + " (1)");
         $("#outSoulGainPrice" + i.toString()).html((data[2] === "N/A") ? 0 : roundToString(getPrice(data[2])));
         $("#outTotalGain" + i.toString()).html(roundToString(gain));
