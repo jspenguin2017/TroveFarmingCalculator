@@ -164,7 +164,7 @@ const PriceRow = function (name, def) {
       )
     );
     //Set in price
-    this.input.val(this.enteredPrice);
+    this.input.val(roundToString(this.enteredPrice));
     this.validate();
     //Bind events
     this.input.change(this.validate.bind(this));
@@ -194,7 +194,7 @@ PriceRow.prototype.drawFeedback = function (feedback) {
  * @param {number} price - The new price to set. 
  */
 PriceRow.prototype.updatePrice = function (price) {
-    this.input.val(price);
+    this.input.val(roundToString(price));
     this.enteredPrice = price;
     lsWrite(this.text, price);
 };
@@ -207,7 +207,7 @@ PriceRow.prototype.updatePrice = function (price) {
  * @listens this.input.change
  */
 PriceRow.prototype.validate = function () {
-    const priceBuffer = parseFloat(this.input.val());
+    const priceBuffer = parseFloat(this.input.val().replace(/,/g, ""));
     if (!isPrice(priceBuffer)) {
         //Invalid data
         this.isValid = false;
