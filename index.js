@@ -54,7 +54,7 @@ const isPrice = function (input) {
  * @return {string} The string representing the rounded input number. 
  */
 const roundToString = function (input) {
-    return (Math.round(input * 1000) / 1000).toString();
+    return (new Intl.NumberFormat("en-US")).format((Math.round(input * 1000) / 1000));
 };
 
 /**
