@@ -36,7 +36,7 @@ let priceRows = [];
  * Whether or not LocalStorage is supported, will be tested and set when the document gets ready. 
  * @var {boolean}
  */
-let lsSupport = false;
+let lsSupport = true;
 
 /**
  * Check if an input is a valid price. 
@@ -563,11 +563,9 @@ const calculate = function () {
  * @listens $(document).ready
  */
 $(document).ready(function () {
-    //Local storage
-    if (window.localStorage) {
-        lsSupport = true;
-    }
-    if (!lsSupport) {
+    //Check if Local Storage is supported
+    if (typeof window.localStorage === "undefined") {
+        lsSupport = false;
         $("#lsWarningDiv").css("display", "block");
     }
     //Draw price table
