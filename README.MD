@@ -6,7 +6,7 @@ https://x01x012013.github.io/Trove/
 
 v2.4 - 2016.08.08: 
 
-1. Added comma separator in numbers
+1. Added comma separator to numbers
 
 v2.3 - 2016.08.05: 
 
