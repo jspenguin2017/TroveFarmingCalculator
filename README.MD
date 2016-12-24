@@ -2,9 +2,9 @@
 
 https://x01x012013.github.io/Trove/
 
-# Last default price update: 2016.12.24
-
 # Patch Notes
+
+### Last default price update: 2016.12.24
 
 v2.4 - 2016.08.08: 
 
