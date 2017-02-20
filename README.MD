@@ -69,5 +69,3 @@ v1.1 - 2016.01.15:
 v1.0 - 2016.01.14: 
 
 1. First stable release
-
-### [View License](https://x01x012013.github.io/Global/license.html)
