@@ -1,25 +1,25 @@
 "use strict";
 
 /**
- * The names of forging materials. 
- * Parallel array with {@link prices}. 
+ * The names of forging materials.
+ * Parallel array with {@link prices}.
  * @const {Array.<string>}
  */
 const names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Soul"];
 /**
- * The default prices of forging materials. 
- * Parallel array with {@link names}. 
+ * The default prices of forging materials.
+ * Parallel array with {@link names}.
  * @const {Array.<number>}
  */
 const prices = [3, 40, 200, 2000, 7000, 3000, 6800];
 /**
- * Defines hexadecimal values of color string. 
+ * Defines hexadecimal values of color string.
  * @const {Object.<string, string>}
  */
 const colors = { green: "#008000", yellow: "#B36B00", red: "#993333" };
 /**
- * Feedback data used in {@link PriceRow#drawFeedback}. 
- * Contains glyphicon class, Bootstrap form class, and color string. 
+ * Feedback data used in {@link PriceRow#drawFeedback}.
+ * Contains glyphicon class, Bootstrap form class, and color string.
  * @const {Object.<string, Array.<string>>}
  */
 const priceRowFeedback = {
@@ -28,41 +28,41 @@ const priceRowFeedback = {
     error: ["glyphicon-remove", "has-error", colors.red]
 };
 /**
- * Price row array, order follows {@link names}. 
+ * Price row array, order follows {@link names}.
  * @var {Array.<PriceRow>}
  */
 let priceRows = [];
 /**
- * Whether or not LocalStorage is supported, will be tested and set when the document gets ready. 
+ * Whether or not LocalStorage is supported, will be tested and set when the document gets ready.
  * @var {boolean}
  */
 let lsSupport = true;
 
 /**
- * Check if an input is a valid price. 
+ * Check if an input is a valid price.
  * @function
- * @param {*} input - The input to be checked. 
- * @return {boolean} True if the input is valid, false otherwise. 
+ * @param {*} input - The input to be checked.
+ * @return {boolean} True if the input is valid, false otherwise.
  */
 const isPrice = function (input) {
     return !isNaN(input) && isFinite(input) && input >= 0;
 };
 /**
- * Round a number to 3 digits after the decimal place. 
+ * Round a number to 3 digits after the decimal place.
  * @function
- * @param {number} input - The number to be rounded. 
- * @return {string} The string representing the rounded input number. 
+ * @param {number} input - The number to be rounded.
+ * @return {string} The string representing the rounded input number.
  */
 const roundToString = function (input) {
     return (new Intl.NumberFormat("en-US")).format((Math.round(input * 1000) / 1000));
 };
 
 /**
- * Safely read price from LocalStorage. 
+ * Safely read price from LocalStorage.
  * @function
- * @param {string} id - The name of the LocalStorage item to retrieve. 
- * @param {number} def - The default price to return if the item cannot be retrieved. 
- * @return {number} A valid price from LocalStorage or the default price. 
+ * @param {string} id - The name of the LocalStorage item to retrieve.
+ * @param {number} def - The default price to return if the item cannot be retrieved.
+ * @return {number} A valid price from LocalStorage or the default price.
  */
 const lsRead = function (id, def) {
     if (lsSupport) {
@@ -80,11 +80,11 @@ const lsRead = function (id, def) {
     }
 };
 /**
- * Safely write price to LocalStorage. 
+ * Safely write price to LocalStorage.
  * @function
- * @param {string} id - The name of the LocalStorage item to write to. 
- * @param {number} val - The price value to write. 
- * @return {boolean} True if the operation was successful, false otherwise. 
+ * @param {string} id - The name of the LocalStorage item to write to.
+ * @param {number} val - The price value to write.
+ * @return {boolean} True if the operation was successful, false otherwise.
  */
 const lsWrite = function (id, val) {
     if (lsSupport) {
@@ -96,61 +96,61 @@ const lsWrite = function (id, val) {
 };
 
 /**
- * Price row constructor. 
+ * Price row constructor.
  * @constructor
- * @param {string} name - The name of the row. 
- * @param {number} def - The default price. 
+ * @param {string} name - The name of the row.
+ * @param {number} def - The default price.
  */
 const PriceRow = function (name, def) {
     /**
-     * The default price of current material. 
-     * This is a contant and should only be set by the constructor. 
+     * The default price of current material.
+     * This is a contant and should only be set by the constructor.
      * @private
      * @member {number}
      */
     this.defPrice = def;
     /**
-     * The price entered by the user. 
-     * When the instance is constructed, price saved in LocalStorage will be retrieved. 
-     * This variable should only be changed by {@link PriceRow#updatePrice}. 
+     * The price entered by the user.
+     * When the instance is constructed, price saved in LocalStorage will be retrieved.
+     * This variable should only be changed by {@link PriceRow#updatePrice}.
      * @member {number}
      */
     this.enteredPrice = lsRead(name, def);
     /**
-     * Whether or not {@link PriceRow#enteredPrice} is valid. 
-     * This variable should only be changed by {@link PriceRow#validate}. 
+     * Whether or not {@link PriceRow#enteredPrice} is valid.
+     * This variable should only be changed by {@link PriceRow#validate}.
      * @member {boolean}
      */
     this.isValid = false;
     /**
-     * The name of the material. 
-     * This is a contant and should only be set by the constructor. 
+     * The name of the material.
+     * This is a contant and should only be set by the constructor.
      * @private
      * @member {string}
      */
     this.text = name;
     /**
-     * The jQueryDOM object of name of the material. 
-     * This object should only be updated by {PriceRow#drawFeedback}. 
+     * The jQueryDOM object of name of the material.
+     * This object should only be updated by {PriceRow#drawFeedback}.
      * @private
      * @member {Object.<jQueryDOM>}
      */
     this.name = $("<td>").html("<strong>" + name + "</strong>");
     /**
-     * The jQueryDOM object of the price input box. 
+     * The jQueryDOM object of the price input box.
      * @member {Object.<jQueryDOM>}
      */
     this.input = $("<input type='text'>").addClass("form-control");
     /**
-     * The jQueryDOM object of the icon on the right end of the input box. 
-     * This object should only be updated by {PriceRow#drawFeedback}. 
+     * The jQueryDOM object of the icon on the right end of the input box.
+     * This object should only be updated by {PriceRow#drawFeedback}.
      * @private
      * @member {Object.<jQueryDOM>}
      */
     this.icon = $("<span>").addClass("glyphicon form-control-feedback");
     /**
-     * The jQueryDOM object of the div containing {@link PriceRow#input} and {@link PriceRow#icon}.  
-     * This object should only be updated by {PriceRow#drawFeedback}. 
+     * The jQueryDOM object of the div containing {@link PriceRow#input} and {@link PriceRow#icon}.
+     * This object should only be updated by {PriceRow#drawFeedback}.
      * @private
      * @member {Object.<jQueryDOM>}
      */
@@ -170,11 +170,11 @@ const PriceRow = function (name, def) {
     this.input.change(this.validate.bind(this));
 };
 /**
- * Update feedback state of the price row. 
- * This method should only be called by {@link PriceRow#updatePrice}. 
+ * Update feedback state of the price row.
+ * This method should only be called by {@link PriceRow#updatePrice}.
  * @private
  * @method
- * @param {string} feedback - A valid feedback state from {@link priceRowFeedback}. 
+ * @param {string} feedback - A valid feedback state from {@link priceRowFeedback}.
  */
 PriceRow.prototype.drawFeedback = function (feedback) {
     //Remove old feedbacks
@@ -186,12 +186,12 @@ PriceRow.prototype.drawFeedback = function (feedback) {
     this.name.css("color", priceRowFeedback[feedback][2]);
 };
 /**
- * Update price of the price row, then save the price to LocalStorage. 
- * This method will assume parameter passed in is a valid price. 
- * This method should only be called by {@link PriceRow#updatePrice}. 
+ * Update price of the price row, then save the price to LocalStorage.
+ * This method will assume parameter passed in is a valid price.
+ * This method should only be called by {@link PriceRow#updatePrice}.
  * @private
  * @method
- * @param {number} price - The new price to set. 
+ * @param {number} price - The new price to set.
  */
 PriceRow.prototype.updatePrice = function (price) {
     this.input.val(roundToString(price));
@@ -199,10 +199,10 @@ PriceRow.prototype.updatePrice = function (price) {
     lsWrite(this.text, price);
 };
 /**
- * Validate a price from user input. 
- * This method will read input from input form. 
- * The input from the user will be checked, then {@link PriceRow#drawFeedback} and {@link PriceRow#updatePrice} will be called to update the price row. 
- * Feedback state (see {@link priceRowFeedback} for more information) will be set to warning if the entered price is below half or above double of the default price. 
+ * Validate a price from user input.
+ * This method will read input from input form.
+ * The input from the user will be checked, then {@link PriceRow#drawFeedback} and {@link PriceRow#updatePrice} will be called to update the price row.
+ * Feedback state (see {@link priceRowFeedback} for more information) will be set to warning if the entered price is below half or above double of the default price.
  * @method
  * @listens this.input.change
  */
@@ -225,7 +225,7 @@ PriceRow.prototype.validate = function () {
     }
 };
 /**
- * Restore the default price. 
+ * Restore the default price.
  * @method
  */
 PriceRow.prototype.restoreDef = function () {
@@ -234,43 +234,43 @@ PriceRow.prototype.restoreDef = function () {
 };
 
 /**
- * Read the entered price of a material from {@link PriceRow#enteredPrice}. 
- * This function will not check whether or not {@link PriceRow#isValid} is true. 
+ * Read the entered price of a material from {@link PriceRow#enteredPrice}.
+ * This function will not check whether or not {@link PriceRow#isValid} is true.
  * @function
- * @param {string} mat - The name of a material in {@link names}. 
- * @return {number} The entered price of the material. 
+ * @param {string} mat - The name of a material in {@link names}.
+ * @return {number} The entered price of the material.
  */
 const getPrice = function (mat) {
     return priceRows[names.indexOf(mat)].enteredPrice;
 }
 
 /**
- * Forge constructor. 
+ * Forge constructor.
  * @constructor
- * @param {number} rarity - The Shadow Level of the gear, 6 for Radiant. 
- * @param {number} star - The star count of the gear. 
+ * @param {number} rarity - The Shadow Level of the gear, 6 for Radiant.
+ * @param {number} star - The star count of the gear.
  */
 const Forge = function (rarity, star) {
     /**
-     * The current Shadow Level of the gear, 6 for Radiant. 
+     * The current Shadow Level of the gear, 6 for Radiant.
      * @member {number}
      */
     this.rarity = rarity;
     /**
-     * The current star count of the gear. 
+     * The current star count of the gear.
      * @member {number}
      */
     this.star = star;
     /**
-     * The total cost in Flux so far. 
+     * The total cost in Flux so far.
      * @member {number}
      */
     this.totalCost = 0;
 };
 /**
- * Update {@link Forge#totalCost} then return the materials costs from forging to the next Shadow Level (or Radiant). 
+ * Update {@link Forge#totalCost} then return the materials costs from forging to the next Shadow Level (or Radiant).
  * @method
- * @return {Array.<*>} An array containing: [Eye count, Eye price, Flux count, Others name and count, Others price]. 
+ * @return {Array.<*>} An array containing: [Eye count, Eye price, Flux count, Others name and count, Others price].
  */
 Forge.prototype.forge = function () {
     //Initialize variables
@@ -319,9 +319,9 @@ Forge.prototype.forge = function () {
     return mat;
 };
 /**
- * Return the materials gain from loot collecting the gear at current state. 
+ * Return the materials gain from loot collecting the gear at current state.
  * @method
- * @return {Array.<*>} An array containing : [Eye count, Flux count, Soul name, total value in Flux]. 
+ * @return {Array.<*>} An array containing : [Eye count, Flux count, Soul name, total value in Flux].
  */
 Forge.prototype.deconstruct = function () {
     //Get material list
@@ -341,12 +341,12 @@ Forge.prototype.deconstruct = function () {
 };
 
 /**
- * Costs and gain database. 
+ * Costs and gain database.
  * @function
- * @param {string} action - The current action, "decon" for loot collecting and "forge" for forging. 
- * @param {string} mat - The material to look up, can be "Eye", "Flux", or "Soul". 
- * @param {number} rarity - The current Shadow Level of the gear, 6 for Radiant. 
- * @return {int} The number of material of the context. 
+ * @param {string} action - The current action, "decon" for loot collecting and "forge" for forging.
+ * @param {string} mat - The material to look up, can be "Eye", "Flux", or "Soul".
+ * @param {number} rarity - The current Shadow Level of the gear, 6 for Radiant.
+ * @return {int} The number of material of the context.
  */
 const db = function (action, mat, rarity) {
     if (action === "decon") {
@@ -393,7 +393,7 @@ const db = function (action, mat, rarity) {
 };
 
 /**
- * Initialize the math div. 
+ * Initialize the math div.
  * @function
  */
 const drawMathDiv = function () {
@@ -468,7 +468,7 @@ const drawMathDiv = function () {
     $("#mathMainDiv").hide();
 };
 /**
- * Calculate costs and gain. 
+ * Calculate costs and gain.
  * @function
  * @listens $("#calcBtn").click
  */
@@ -558,7 +558,7 @@ const calculate = function () {
 };
 
 /**
- * When the document is ready, initialize the page. 
+ * When the document is ready, initialize the page.
  * @function
  * @listens $(document).ready
  */
