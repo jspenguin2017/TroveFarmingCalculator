@@ -1,6 +1,6 @@
-# Trove Forging Calculator
+# Trove Farming Calculator
 
-https://x01x012013.github.io/Trove/
+https://jspenguin2017.github.io/TroveFarmingCalculator/
 
 # Patch Notes
 
