@@ -6,12 +6,12 @@ https://jspenguin2017.github.io/TroveFarmingCalculator/
 
 ## Patch Notes
 
-### Last default price update: 2016.12.24
+### Last default price update: 2017.04.29
 
 v2.4 - 2016.08.08: 
 
 1. Added comma separator to numbers
-2. Default price change will no longer change version number (updated on 2016.12.24)
+2. Default price change will no longer change version number
 
 v2.3 - 2016.08.05: 
 
