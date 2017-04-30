@@ -11,7 +11,7 @@ const names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Soul
  * Parallel array with {@link names}.
  * @const {Array.<number>}
  */
-const prices = [3, 40, 200, 2000, 7000, 3000, 6800];
+const prices = [2.5, 25, 100, 1200, 5000, 3400, 4000];
 /**
  * Defines hexadecimal values of color string.
  * @const {Object.<string, string>}
