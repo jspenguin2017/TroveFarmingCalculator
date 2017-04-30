@@ -67,7 +67,7 @@ const roundToString = function (input) {
 const lsRead = function (id, def) {
     if (lsSupport) {
         //Read data from LocalStorage
-        const price = parseFloat(localStorage.getItem("Cat_Forger_" + id));
+        const price = parseFloat(localStorage.getItem("Trove_Farming_Calculator_" + id));
         //Check if the data read is a valid price
         if (!isPrice(price)) {
             return def;
@@ -88,7 +88,7 @@ const lsRead = function (id, def) {
  */
 const lsWrite = function (id, val) {
     if (lsSupport) {
-        localStorage.setItem("Cat_Forger_" + id, val);
+        localStorage.setItem("Trove_Farming_Calculator_" + id, val);
         return true;
     } else {
         return false;
