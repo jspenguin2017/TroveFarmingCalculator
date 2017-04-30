@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--<meta name="description" content="" />-->
     <meta name="author" content="jspenguin2017" />
@@ -11,10 +10,10 @@
     <!-- CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
     <!-- JS -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" charset="utf-8" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js" charset="utf-8" integrity="sha256-Wp3wC/dKYQ/dCOUD7VUXXp4neLI5t0uUEF1pg0dFnAE=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://jspenguin2017.github.io/Global/disqusLoader.js" charset="utf-8"></script>
+    <script src="https://jspenguin2017.github.io/Libraries/disqusLoader.js" charset="utf-8"></script>
     <script src="index.js" charset="utf-8"></script>
 </head>
 <body>
@@ -24,7 +23,7 @@
         <div class="jumbotron">
             <div class="container">
                 <h2 style="color:red;">JavaScript Disabled!</h2>
-                <p style="color:red;">You MUST have JavaScript enabled to use this tool! </p>
+                <p style="color:red;">You need JavaScript to use this tool! </p>
             </div>
         </div>
     </noscript>
@@ -41,7 +40,7 @@
                 <p>When you see &quot;Forge to Shadow Level 5, 1713.8 Flux, 761 Flux More&quot;, it means &quot;Forge to Shadow Level 5 rarity, 0 stars, then deconstruct: You will get 1713.8 Flux profit which is 761 Flux more than deconstruct directly&quot;. </p>
                 <p>Prices you entered will be saved to your browser if possible, and will be loaded the next time you come back. </p>
             </div>
-            <button type="button" class="btn btn-danger btn-lg" style="width: 100%;" data-toggle="collapse" data-target="#helpDiv">Show/Hide Help</button>
+            <button type="button" class="btn btn-danger btn-lg" style="width:100%;" data-toggle="collapse" data-target="#helpDiv">Show/Hide Help</button>
             <br><br>
             <button type="button" class="btn btn-default btn-lg" id="jumpToChatBtn">Jump to chat board</button>
             <br><br><br>
@@ -61,7 +60,7 @@
                 </thead>
                 <tbody id="priceTbody"></tbody>
             </table>
-            <div id="lsWarningDiv" style="display: none;" class="alert alert-danger">
+            <div id="lsWarningDiv" style="display:none;" class="alert alert-danger">
                 <p><strong>Warning: </strong>Your browser does not support Local Storage and prices you entered will not be saved when you close this webpage. </p>
             </div>
             <br>
@@ -110,7 +109,7 @@
             <div id="outResultsDiv">
                 <br>
                 <!-- Profit Output -->
-                <p id="outProfitP" style="color: #008000;"></p>
+                <p id="outProfitP" style="color:#008000;"></p>
             </div>
         </div>
     </div>
