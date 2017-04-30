@@ -1,8 +1,10 @@
 # Trove Farming Calculator
 
+This is a tool for the game Trove, more information can be found inside the tool: 
+
 https://jspenguin2017.github.io/TroveFarmingCalculator/
 
-# Patch Notes
+## Patch Notes
 
 ### Last default price update: 2016.12.24
 
