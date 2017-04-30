@@ -8,7 +8,7 @@ This is a calculator tool for the game Trove, more information can be found insi
 
 ### Last default price update: 2017.04.29
 
-v2.5 - 2017.04.29
+v2.5 - 2017.04.29: 
 
 1. Updated jQuery to 3.2.1
 2. Default price update will no longer change version number
