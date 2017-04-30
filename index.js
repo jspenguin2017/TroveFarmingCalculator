@@ -587,5 +587,5 @@ $(document).ready(function () {
     });
     $("#calcBtn").click(calculate);
     //Load Disqus
-    disqusLoader("catforger", "https://jspenguin2017.github.io/TroveFarmingCalculator/", "main", "Trove Forging Calculator");
+    disqusLoader("catforger", "https://jspenguin2017.github.io/TroveFarmingCalculator/", "main", "Trove Farming Calculator");
 });
