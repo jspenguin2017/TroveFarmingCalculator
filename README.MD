@@ -11,7 +11,7 @@ This is a tool for the game Trove, more information can be found inside the tool
 v2.5 - 2017.04.29
 
 1. Updated jQuery to 3.2.1
-2. Default price change will no longer change version number
+2. Default price update will no longer change version number
 
 v2.4 - 2016.08.08: 
 
