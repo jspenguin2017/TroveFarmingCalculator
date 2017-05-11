@@ -114,8 +114,9 @@ const getPrice = function (mat) {
  * @param {float} def - The default price.
  */
 const PriceRow = function (name, def) {
+    //Variables and constants
     /**
-     * The default price of current material.
+     * The default price of this material.
      * @private
      * @member
      * @const {float}
@@ -168,7 +169,7 @@ const PriceRow = function (name, def) {
      * @member {Object.<jQueryDOM>}
      */
     this.inputDiv = $("<div>").addClass("form-group has-feedback").append(this.input, this.icon);
-    //=====Initialization=====
+    //Initialization
     //Draw table row and put in data
     $("#priceTbody").append(
         $("<tr>").append(
@@ -220,18 +221,19 @@ PriceRow.prototype.updatePrice = function (price) {
  * @listens this.input.change
  */
 PriceRow.prototype.validate = function () {
+    //Read entered price, remove comma separators
     const priceBuffer = parseFloat(this.input.val().replace(/,/g, ""));
     if (!isPrice(priceBuffer)) {
         //Invalid data
         this.isValid = false;
         this.drawFeedback("error");
     } else if (priceBuffer < (this.defPrice / 2) || priceBuffer > (this.defPrice * 2)) {
-        //Valid but off from default
+        //Valid but very different from default
         this.isValid = true;
         this.drawFeedback("warning");
         this.updatePrice(priceBuffer);
     } else {
-        //Valid
+        //Valid and reasonable
         this.isValid = true;
         this.drawFeedback("success");
         this.updatePrice(priceBuffer);
@@ -273,7 +275,7 @@ const Forge = function (rarity, star) {
 /**
  * Update this.totalCost then return the materials costs from forging to the next Shadow Level (or Radiant).
  * @method
- * @return {Array.<*>} An array containing: [Eye count, Eye price, Flux count, Others name and count, Others price].
+ * @return {Array} An array: [Eye count, Eye price, Flux count, Others name and count, Others price].
  */
 Forge.prototype.forge = function () {
     //Initialize variables
@@ -302,7 +304,7 @@ Forge.prototype.forge = function () {
         //Others
         mat.push("N/A");
         mat.push(0);
-    } else if (this.rarity !== 5) { //Shadow Level 2~4: 2 Souls
+    } else if (this.rarity !== 5) { //Shadow Level 2 to 4: 2 Souls
         //Soul type needed is the same: Shadow Level 2 decompose to 1 Twice and need 2 Twice to forge it to next tier
         mat.push(db("decon", "Soul", this.rarity));
         priceBuffer = getPrice(mat[3]) * 2;
@@ -324,7 +326,7 @@ Forge.prototype.forge = function () {
 /**
  * Return the materials gain from loot collecting the gear at current state.
  * @method
- * @return {Array.<*>} An array containing : [Eye count, Flux count, Soul name, total value in Flux].
+ * @return {Array} An array: [Eye count, Flux count, Soul name, total value in Flux].
  */
 Forge.prototype.deconstruct = function () {
     //Get material list
@@ -343,6 +345,7 @@ Forge.prototype.deconstruct = function () {
     return mat;
 };
 
+//=====Other Functions=====
 /**
  * Costs and gain database.
  * @function
@@ -394,7 +397,6 @@ const db = function (action, mat, rarity) {
         }
     }
 };
-
 /**
  * Initialize the math div.
  * @function
@@ -560,6 +562,7 @@ const calculate = function () {
     $("html, body").animate({ scrollTop: $("#step2P").offset().top }, "fast");
 };
 
+//=====Initialization=====
 /**
  * When the document is ready, initialize the page.
  * @function
