@@ -1,26 +1,27 @@
 "use strict";
 
+//=====Variables and Constants=====
 /**
  * The names of forging materials.
- * Parallel array with {@link prices}.
+ * Parallel array with prices.
  * @const {Array.<string>}
  */
 const names = ["Eye", "Twice", "Thrice", "Quad", "Penta", "Flame", "Radiant Soul"];
 /**
  * The default prices of forging materials.
- * Parallel array with {@link names}.
+ * Parallel array with names.
  * @const {Array.<number>}
  */
 const prices = [2.5, 25, 100, 1200, 5000, 3400, 4000];
 /**
  * Defines hexadecimal values of color string.
- * @const {Object.<string, string>}
+ * @const {Object}
  */
 const colors = { green: "#008000", yellow: "#B36B00", red: "#993333" };
 /**
- * Feedback data used in {@link PriceRow#drawFeedback}.
- * Contains glyphicon class, Bootstrap form class, and color string.
- * @const {Object.<string, Array.<string>>}
+ * Feedback data used in PriceRow.prototype.drawFeedback().
+ * [Bootstrap glyphicon class, Bootstrap form class, and color string]
+ * @const {Object}
  */
 const priceRowFeedback = {
     success: ["glyphicon-ok", "has-success", colors.green],
@@ -28,16 +29,17 @@ const priceRowFeedback = {
     error: ["glyphicon-remove", "has-error", colors.red]
 };
 /**
- * Price row array, order follows {@link names}.
+ * PriceRow objects, parallel array with names.
  * @var {Array.<PriceRow>}
  */
 let priceRows = [];
 /**
  * Whether or not LocalStorage is supported, will be tested and set when the document gets ready.
- * @var {boolean}
+ * @const {boolean}
  */
 let lsSupport = true;
 
+//=====Helper Functions=====
 /**
  * Check if an input is a valid price.
  * @function
@@ -50,19 +52,18 @@ const isPrice = function (input) {
 /**
  * Round a number to 3 digits after the decimal place.
  * @function
- * @param {number} input - The number to be rounded.
- * @return {string} The string representing the rounded input number.
+ * @param {float} input - The number to be rounded.
+ * @return {string} The string representing the rounded input number, comma separators will be inserted.
  */
 const roundToString = function (input) {
     return (new Intl.NumberFormat("en-US")).format((Math.round(input * 1000) / 1000));
 };
-
 /**
  * Safely read price from LocalStorage.
  * @function
  * @param {string} id - The name of the LocalStorage item to retrieve.
- * @param {number} def - The default price to return if the item cannot be retrieved.
- * @return {number} A valid price from LocalStorage or the default price.
+ * @param {float} def - The default price to return if the price cannot be retrieved.
+ * @return {float} A valid price from LocalStorage or the default price.
  */
 const lsRead = function (id, def) {
     if (lsSupport) {
@@ -80,10 +81,10 @@ const lsRead = function (id, def) {
     }
 };
 /**
- * Safely write price to LocalStorage.
+ * Write price to LocalStorage.
  * @function
  * @param {string} id - The name of the LocalStorage item to write to.
- * @param {number} val - The price value to write.
+ * @param {float} val - The price value to write.
  * @return {boolean} True if the operation was successful, false otherwise.
  */
 const lsWrite = function (id, val) {
@@ -94,63 +95,75 @@ const lsWrite = function (id, val) {
         return false;
     }
 };
-
 /**
- * Price row constructor.
+ * Read the entered price of a material.
+ * This function will not check whether or not the price is valid.
+ * @function
+ * @param {string} mat - The name of a material from names.
+ * @return {number} The entered price of the material.
+ */
+const getPrice = function (mat) {
+    return priceRows[names.indexOf(mat)].enteredPrice;
+};
+
+//=====PriceRow Class=====
+/**
+ * PriceRow constructor.
  * @constructor
  * @param {string} name - The name of the row.
- * @param {number} def - The default price.
+ * @param {float} def - The default price.
  */
 const PriceRow = function (name, def) {
     /**
      * The default price of current material.
-     * This is a contant and should only be set by the constructor.
      * @private
-     * @member {number}
+     * @member
+     * @const {float}
      */
     this.defPrice = def;
     /**
      * The price entered by the user.
      * When the instance is constructed, price saved in LocalStorage will be retrieved.
-     * This variable should only be changed by {@link PriceRow#updatePrice}.
-     * @member {number}
+     * This variable should only be changed by PriceRow.prototype.updatePrice().
+     * @member {float}
      */
     this.enteredPrice = lsRead(name, def);
     /**
-     * Whether or not {@link PriceRow#enteredPrice} is valid.
-     * This variable should only be changed by {@link PriceRow#validate}.
+     * Whether or not this.enteredPrice is valid.
+     * This variable should only be changed by PriceRow.prototype.validate().
      * @member {boolean}
      */
     this.isValid = false;
     /**
      * The name of the material.
-     * This is a contant and should only be set by the constructor.
      * @private
-     * @member {string}
+     * @member
+     * @const {string}
      */
     this.text = name;
     /**
-     * The jQueryDOM object of name of the material.
-     * This object should only be updated by {PriceRow#drawFeedback}.
+     * The jQuery DOM object of name of the material.
+     * This object should only be updated by PriceRow.prototype.drawFeedback().
      * @private
      * @member {Object.<jQueryDOM>}
      */
     this.name = $("<td>").html("<strong>" + name + "</strong>");
     /**
-     * The jQueryDOM object of the price input box.
+     * The jQuery DOM object of the price input box.
+     * @private
      * @member {Object.<jQueryDOM>}
      */
     this.input = $("<input type='text'>").addClass("form-control");
     /**
-     * The jQueryDOM object of the icon on the right end of the input box.
-     * This object should only be updated by {PriceRow#drawFeedback}.
+     * The jQuery DOM object of the icon on the right end of the input box.
+     * This object should only be updated by PriceRow.prototype.drawFeedback().
      * @private
      * @member {Object.<jQueryDOM>}
      */
     this.icon = $("<span>").addClass("glyphicon form-control-feedback");
     /**
-     * The jQueryDOM object of the div containing {@link PriceRow#input} and {@link PriceRow#icon}.
-     * This object should only be updated by {PriceRow#drawFeedback}.
+     * The jQuery DOM object of the div containing this.input and this.icon.
+     * This object should only be updated by PriceRow.prototype.drawFeedback().
      * @private
      * @member {Object.<jQueryDOM>}
      */
@@ -158,10 +171,10 @@ const PriceRow = function (name, def) {
     //=====Initialization=====
     //Draw table row and put in data
     $("#priceTbody").append(
-      $("<tr>").append(
-        this.name,
-        $("<td>").append(this.inputDiv)
-      )
+        $("<tr>").append(
+            this.name,
+            $("<td>").append(this.inputDiv)
+        )
     );
     //Set in price
     this.input.val(roundToString(this.enteredPrice));
@@ -171,10 +184,10 @@ const PriceRow = function (name, def) {
 };
 /**
  * Update feedback state of the price row.
- * This method should only be called by {@link PriceRow#updatePrice}.
+ * This method should only be called by PriceRow.prototype.updatePrice().
  * @private
  * @method
- * @param {string} feedback - A valid feedback state from {@link priceRowFeedback}.
+ * @param {string} feedback - A valid feedback state from priceRowFeedback.
  */
 PriceRow.prototype.drawFeedback = function (feedback) {
     //Remove old feedbacks
@@ -188,7 +201,7 @@ PriceRow.prototype.drawFeedback = function (feedback) {
 /**
  * Update price of the price row, then save the price to LocalStorage.
  * This method will assume parameter passed in is a valid price.
- * This method should only be called by {@link PriceRow#updatePrice}.
+ * This method should only be called by PriceRow.prototype.updatePrice().
  * @private
  * @method
  * @param {number} price - The new price to set.
@@ -201,8 +214,8 @@ PriceRow.prototype.updatePrice = function (price) {
 /**
  * Validate a price from user input.
  * This method will read input from input form.
- * The input from the user will be checked, then {@link PriceRow#drawFeedback} and {@link PriceRow#updatePrice} will be called to update the price row.
- * Feedback state (see {@link priceRowFeedback} for more information) will be set to warning if the entered price is below half or above double of the default price.
+ * The input from the user will be checked, then PriceRow.prototype.drawFeedback() and PriceRow.prototype.updatePrice() will be called to update the price row.
+ * Feedback state from priceRowFeedback will be set to warn the user if the entered price is below half or above double of the default price.
  * @method
  * @listens this.input.change
  */
@@ -233,17 +246,7 @@ PriceRow.prototype.restoreDef = function () {
     this.validate();
 };
 
-/**
- * Read the entered price of a material from {@link PriceRow#enteredPrice}.
- * This function will not check whether or not {@link PriceRow#isValid} is true.
- * @function
- * @param {string} mat - The name of a material in {@link names}.
- * @return {number} The entered price of the material.
- */
-const getPrice = function (mat) {
-    return priceRows[names.indexOf(mat)].enteredPrice;
-}
-
+//=====Force Class=====
 /**
  * Forge constructor.
  * @constructor
@@ -268,7 +271,7 @@ const Forge = function (rarity, star) {
     this.totalCost = 0;
 };
 /**
- * Update {@link Forge#totalCost} then return the materials costs from forging to the next Shadow Level (or Radiant).
+ * Update this.totalCost then return the materials costs from forging to the next Shadow Level (or Radiant).
  * @method
  * @return {Array.<*>} An array containing: [Eye count, Eye price, Flux count, Others name and count, Others price].
  */
@@ -326,9 +329,9 @@ Forge.prototype.forge = function () {
 Forge.prototype.deconstruct = function () {
     //Get material list
     const mat = [
-      db("decon", "Eye", this.rarity),
-      db("decon", "Flux", this.rarity),
-      db("decon", "Soul", this.rarity)
+        db("decon", "Eye", this.rarity),
+        db("decon", "Flux", this.rarity),
+        db("decon", "Soul", this.rarity)
     ];
     //Calculate total gain in Flux
     let totalFluxGain = (mat[0] * getPrice("Eye")) + (mat[1]);
@@ -345,8 +348,8 @@ Forge.prototype.deconstruct = function () {
  * @function
  * @param {string} action - The current action, "decon" for loot collecting and "forge" for forging.
  * @param {string} mat - The material to look up, can be "Eye", "Flux", or "Soul".
- * @param {number} rarity - The current Shadow Level of the gear, 6 for Radiant.
- * @return {int} The number of material of the context.
+ * @param {float} rarity - The current Shadow Level of the gear, 6 for Radiant.
+ * @return {integer} The number of material of the context.
  */
 const db = function (action, mat, rarity) {
     if (action === "decon") {
@@ -418,49 +421,49 @@ const drawMathDiv = function () {
             //Previous costs
             if (i > 1 && ii === 0) {
                 prevCostsBuffer = $("<tr>").append(
-                  $("<td>").html("Previous Costs"),
-                  $("<td>").attr("id", "outPrevCosts" + i.toString())
+                    $("<td>").html("Previous Costs"),
+                    $("<td>").attr("id", "outPrevCosts" + i.toString())
                 );
             } else {
                 prevCostsBuffer = "";
             }
             direction = (ii === 0) ? "Costs" : "Gain";
             $("#mathContainerDiv").append(
-              $("<div>").addClass("mathTableDiv").attr("id", "out" + direction + "Div" + i.toString()).append(
-                //Draw title
-                titleBuffer,
-                $("<p>").html((ii === 0) ? "Costs in forging: " : "Gain from deconstructing: "),
-                //Draw table
-                $("<table>").addClass("table table-hover").css("max-width", "600px").append(
-                  $("<thead>").append(
-                    $("<tr>").append(
-                      $("<th>").css("width", "65%").html("Material"),
-                      $("<th>").css("width", "35%").html(direction + " (in Flux)")
+                $("<div>").addClass("mathTableDiv").attr("id", "out" + direction + "Div" + i.toString()).append(
+                    //Draw title
+                    titleBuffer,
+                    $("<p>").html((ii === 0) ? "Costs in forging: " : "Gain from deconstructing: "),
+                    //Draw table
+                    $("<table>").addClass("table table-hover").css("max-width", "600px").append(
+                        $("<thead>").append(
+                            $("<tr>").append(
+                                $("<th>").css("width", "65%").html("Material"),
+                                $("<th>").css("width", "35%").html(direction + " (in Flux)")
+                            )
+                        ),
+                        $("<tbody>").append(
+                            prevCostsBuffer,
+                            $("<tr>").append(
+                                $("<td>").attr("id", "outEye" + direction + "Count" + i.toString()),
+                                $("<td>").attr("id", "outEye" + direction + "Price" + i.toString())
+                            ),
+                            $("<tr>").append(
+                                $("<td>").attr("id", "outFlux" + direction + "Count" + i.toString()),
+                                $("<td>").attr("id", "outFlux" + direction + "Price" + i.toString())
+                            ),
+                            $("<tr>").append(
+                                $("<td>").attr("id", "outSoul" + direction + "Type" + i.toString()),
+                                $("<td>").attr("id", "outSoul" + direction + "Price" + i.toString())
+                            ),
+                            $("<tr>").append(
+                                $("<td>").html("<strong>Total " + direction + " in Flux</strong>"),
+                                $("<td>").append(
+                                    $("<strong>").attr("id", "outTotal" + direction + i.toString())
+                                )
+                            )
+                        )
                     )
-                  ),
-                  $("<tbody>").append(
-                    prevCostsBuffer,
-                    $("<tr>").append(
-                      $("<td>").attr("id", "outEye" + direction + "Count" + i.toString()),
-                      $("<td>").attr("id", "outEye" + direction + "Price" + i.toString())
-                    ),
-                    $("<tr>").append(
-                      $("<td>").attr("id", "outFlux" + direction + "Count" + i.toString()),
-                      $("<td>").attr("id", "outFlux" + direction + "Price" + i.toString())
-                    ),
-                    $("<tr>").append(
-                      $("<td>").attr("id", "outSoul" + direction + "Type" + i.toString()),
-                      $("<td>").attr("id", "outSoul" + direction + "Price" + i.toString())
-                    ),
-                    $("<tr>").append(
-                      $("<td>").html("<strong>Total " + direction + " in Flux</strong>"),
-                      $("<td>").append(
-                        $("<strong>").attr("id", "outTotal" + direction + i.toString())
-                      )
-                    )
-                  )
                 )
-              )
             );
         }
     }
@@ -496,7 +499,7 @@ const calculate = function () {
             data = forge.forge();
             $("#outEyeCostsCount" + i.toString()).html("Eye (" + roundToString(data[0]) + ")");
             $("#outEyeCostsPrice" + i.toString()).html(roundToString(data[1]));
-            $("#outFluxCostsCount" + i.toString()).html("Flux (" +roundToString(data[2]) + ")");
+            $("#outFluxCostsCount" + i.toString()).html("Flux (" + roundToString(data[2]) + ")");
             $("#outFluxCostsPrice" + i.toString()).html(roundToString(data[2]));
             $("#outSoulCostsType" + i.toString()).html(data[3]);
             $("#outSoulCostsPrice" + i.toString()).html(roundToString(data[4]));
@@ -528,7 +531,7 @@ const calculate = function () {
             totalBuffer += ": " + roundToString(total) + " Flux Profit";
         }
         $("#outText" + i.toString()).html(totalBuffer)
-          .css("color", (total >= 0) ? colors.yellow : colors.red);
+            .css("color", (total >= 0) ? colors.yellow : colors.red);
         //Final message
         if (i === 0) {
             totalBuffer = "Deconstruct Directly, " + roundToString(total) + " Flux";
@@ -586,6 +589,6 @@ $(document).ready(function () {
         });
     });
     $("#calcBtn").click(calculate);
-    //Load Disqus
+    //Load Disqus chat board
     disqusLoader("catforger", "https://jspenguin2017.github.io/TroveFarmingCalculator/", "main", "Trove Farming Calculator");
 });

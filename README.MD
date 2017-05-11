@@ -2,6 +2,8 @@
 
 This is a calculator tool for the game Trove, more information can be found inside the tool. 
 
+Please open an issue if there is something you want me to know. 
+
 ### [Enter](https://jspenguin2017.github.io/TroveFarmingCalculator/)
 
 ## Patch Notes
@@ -15,7 +17,7 @@ v2.5 - 2017.04.29:
 
 v2.4 - 2016.08.08: 
 
-1. Added comma separator to numbers
+1. Added comma separators to numbers
 
 v2.3 - 2016.08.05: 
 
