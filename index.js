@@ -220,25 +220,28 @@ PriceRow.prototype.updatePrice = function (price) {
  * @method
  * @listens this.input.change
  */
-PriceRow.prototype.validate = function () {
-    //Read entered price, remove comma separators
-    const priceBuffer = parseFloat(this.input.val().replace(/,/g, ""));
-    if (!isPrice(priceBuffer)) {
-        //Invalid data
-        this.isValid = false;
-        this.drawFeedback("error");
-    } else if (priceBuffer < (this.defPrice / 2) || priceBuffer > (this.defPrice * 2)) {
-        //Valid but very different from default
-        this.isValid = true;
-        this.drawFeedback("warning");
-        this.updatePrice(priceBuffer);
-    } else {
-        //Valid and reasonable
-        this.isValid = true;
-        this.drawFeedback("success");
-        this.updatePrice(priceBuffer);
-    }
-};
+PriceRow.prototype.validate = (function () {
+    const matcher = /,/g;
+    return function () {
+        //Read entered price, remove comma separators
+        const priceBuffer = parseFloat(this.input.val().replace(matcher, ""));
+        if (!isPrice(priceBuffer)) {
+            //Invalid data
+            this.isValid = false;
+            this.drawFeedback("error");
+        } else if (priceBuffer < (this.defPrice / 2) || priceBuffer > (this.defPrice * 2)) {
+            //Valid but very different from default
+            this.isValid = true;
+            this.drawFeedback("warning");
+            this.updatePrice(priceBuffer);
+        } else {
+            //Valid and reasonable
+            this.isValid = true;
+            this.drawFeedback("success");
+            this.updatePrice(priceBuffer);
+        }
+    };
+})();
 /**
  * Restore the default price.
  * @method
