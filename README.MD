@@ -1,6 +1,8 @@
 # Trove Farming Calculator
 
-This is a calculator tool for the game Trove, more information can be found inside the tool. 
+A calculator tool for the game Trove
+
+More information can be found inside the tool. 
 
 Please open an issue if there is something you want me to know. 
 
